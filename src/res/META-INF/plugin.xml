@@ -1,0 +1,25 @@
+<idea-plugin version="2">
+    <name>FavoriteFolders</name>
+    <description>Adds favorite folders into FileChooser dialog toolbar.</description>
+    <change-notes><![CDATA[<pre>
+<b>v0.0.0.1</b> - Initial revision.
+<b>v0.0.0.2</b> - Allow to install plugin in all Idea-based products.
+<b>v0.0.0.3</b> - Allow to set custom name to favorite folder (to show in tooltip)
+        </pre>]]>
+    </change-notes>
+    <version>0.0.0.3</version>
+    <vendor url="http://plugins.jetbrains.net/plugin/?id=5940" >xBlackCat</vendor>
+    <idea-version since-build="102.1"/>
+    <depends>com.intellij.modules.lang</depends>
+
+    <application-components>
+        <!-- Add your application components here -->
+        <component>
+            <implementation-class>org.xblackcat.idea.favorites.FavoriteFoldersPlugin</implementation-class>
+        </component>
+    </application-components>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable instance="org.xblackcat.idea.favorites.FavoriteFoldersConfigPane" id="favoritefolders"/>
+    </extensions>
+</idea-plugin>
