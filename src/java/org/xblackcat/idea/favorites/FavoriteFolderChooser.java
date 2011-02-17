@@ -1,15 +1,18 @@
 package org.xblackcat.idea.favorites;
 
+import com.intellij.ide.ui.ListCellRendererWrapper;
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.ui.FixedSizeButton;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * @author xBlackCat
@@ -17,7 +20,7 @@ import java.awt.event.ActionListener;
 class FavoriteFolderChooser {
     private boolean canceled = true;
     private VirtualFile selectedFolder = null;
-    private FolderIcon icon = FolderIcon.Default;
+    private IIconGetter icon = FolderIcon.Default;
     private String name;
 
     private JComponent mainPanel;
@@ -42,7 +45,7 @@ class FavoriteFolderChooser {
         browseDirectoryButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 FileChooserDescriptor descriptor = new FileChooserDescriptor(false, true, true, false, true, false);
-                VirtualFile[] files = FileChooser.chooseFiles(mainPanel, descriptor);
+                VirtualFile[] files = FileChooser.chooseFiles(mainPanel, descriptor, selectedFolder);
                 if (files.length != 0) {
                     selectedFolder = files[0];
                     filePathField.setText(selectedFolder.getPresentableUrl());
@@ -73,24 +76,51 @@ class FavoriteFolderChooser {
         fieldsPane.add(selectFolderPane);
 
         final JComboBox iconSelector = new JComboBox(FolderIcon.values());
-        iconSelector.setSelectedItem(icon);
-        iconSelector.setRenderer(new DefaultListCellRenderer() {
+        iconSelector.getModel().setSelectedItem(icon);
+        iconSelector.setRenderer(new ListCellRendererWrapper<IIconGetter>(iconSelector) {
             @Override
-            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
-                FolderIcon i = (FolderIcon) value;
-
-                setIcon(i.getIcon());
-                setText(i.name());
-
-                return this;
+            public void customize(JList jList, IIconGetter value, int i, boolean b, boolean b1) {
+                setIcon(value.getIcon());
+                setText(value.isCustom() ? "<Custom>" : value.getName());
             }
         });
         iconSelector.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                icon = (FolderIcon) iconSelector.getSelectedItem();
+                IIconGetter newIcon = (IIconGetter) iconSelector.getSelectedItem();
+
+                if (newIcon == FolderIcon.Custom) {
+                    newIcon = null;
+
+                    FileChooserDescriptor iconChooser = new FileChooserDescriptor(true, false, true, false, true, false);
+                    VirtualFile s;
+                    if (icon.isCustom()) {
+                        s = VirtualFileManager.getInstance().findFileByUrl(icon.getName());
+                    } else {
+                        s = null;
+                    }
+
+                    iconSelector.hidePopup();
+                    VirtualFile[] files = FileChooser.chooseFiles(mainPanel, iconChooser, s);
+                    if (files.length == 0) {
+                        return;
+                    }
+
+                    try {
+                        newIcon = FolderIcon.loadIcon(files[0].getUrl());
+                    } catch (IOException e1) {
+                        // Fall through: if icon can not be loaded - show error lately
+                    }
+
+                    if (newIcon == null) {
+                        // Show error
+                        JOptionPane.showMessageDialog(mainPanel, FavoriteFoldersBundle.message("FavoriteFolder.ErrorDialog.invalidImage"));
+                        return;
+                    }
+                }
+
+                icon = newIcon;
+                iconSelector.getModel().setSelectedItem(icon);
             }
         });
 

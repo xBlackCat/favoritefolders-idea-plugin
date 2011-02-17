@@ -12,10 +12,10 @@ class FavoriteFolder {
     @NotNull
     private final String url;
     private final VirtualFile file;
-    private final FolderIcon icon;
+    private final IIconGetter icon;
     private final String name;
 
-    private FavoriteFolder(String name, VirtualFile file, @NotNull String url, FolderIcon icon) {
+    private FavoriteFolder(String name, VirtualFile file, @NotNull String url, IIconGetter icon) {
         this.name = name;
         this.file = file;
         this.icon = icon;
@@ -26,7 +26,7 @@ class FavoriteFolder {
         this(name, VirtualFileManager.getInstance().findFileByUrl(url), url, FolderIcon.getIcon(iconName));
     }
 
-    FavoriteFolder(String name, VirtualFile file, FolderIcon icon) {
+    FavoriteFolder(String name, VirtualFile file, IIconGetter icon) {
         this(name, file, file.getUrl(), icon);
     }
 
@@ -40,7 +40,7 @@ class FavoriteFolder {
         return url;
     }
 
-    public FolderIcon getIcon() {
+    public IIconGetter getIcon() {
         return icon;
     }
 

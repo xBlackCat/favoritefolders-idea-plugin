@@ -123,7 +123,7 @@ public class FavoriteFoldersPlugin implements ApplicationComponent, PersistentSt
         for (FavoriteFolder ff : favorites) {
             Element e = new Element("folder");
             e.setAttribute("url", ff.getUrl());
-            e.setAttribute("icon", ff.getIcon().name());
+            e.setAttribute("icon", ff.getIcon().getName());
             if (!StringUtils.isBlank(ff.getName())) {
                 e.setAttribute("name", ff.getName());
             }

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="favoritefolders" default="all">
+
+
+    <property file="build.properties"/>
+    <!-- Uncomment the following property if no tests compilation is needed -->
+    <!--
+   <property name="skip.tests" value="true"/>
+    -->
+
+    <!-- Compiler options -->
+
+    <property name="compiler.debug" value="on"/>
+    <property name="compiler.generate.no.warnings" value="off"/>
+    <property name="compiler.args" value=""/>
+    <property name="compiler.max.memory" value="128m"/>
+    <patternset id="ignored.files">
+        <exclude name="**/CVS/**"/>
+        <exclude name="**/SCCS/**"/>
+        <exclude name="**/RCS/**"/>
+        <exclude name="**/rcs/**"/>
+        <exclude name="**/.DS_Store/**"/>
+        <exclude name="**/.svn/**"/>
+        <exclude name="**/.pyc/**"/>
+        <exclude name="**/.pyo/**"/>
+        <exclude name="**/*.pyc/**"/>
+        <exclude name="**/*.pyo/**"/>
+        <exclude name="**/.git/**"/>
+        <exclude name="**/*.hprof/**"/>
+        <exclude name="**/_svn/**"/>
+        <exclude name="**/.hg/**"/>
+        <exclude name="**/*.lib/**"/>
+        <exclude name="**/*~/**"/>
+        <exclude name="**/*.orig/**"/>
+    </patternset>
+    <patternset id="library.patterns">
+        <include name="*.zip"/>
+        <include name="*.war"/>
+        <include name="*.egg"/>
+        <include name="*.ear"/>
+        <include name="*.swc"/>
+        <include name="*.jar"/>
+    </patternset>
+    <patternset id="compiler.resources">
+        <include name="**/?*.properties"/>
+        <include name="**/?*.xml"/>
+        <include name="**/?*.gif"/>
+        <include name="**/?*.png"/>
+        <include name="**/?*.jpeg"/>
+        <include name="**/?*.jpg"/>
+        <include name="**/?*.html"/>
+        <include name="**/?*.dtd"/>
+        <include name="**/?*.tld"/>
+        <include name="**/?*.ftl"/>
+    </patternset>
+
+    <!-- JDK definitions -->
+
+    <property name="jdk.bin.idea" value="${jdk.home.idea}/../../Langs/jdk1.6.0_21/bin"/>
+    <path id="jdk.classpath.idea">
+        <fileset dir="${jdk.home.idea}">
+            <include name="../../Langs/jdk1.6.0_21/jre/lib/alt-rt.jar"/>
+            <include name="../../Langs/jdk1.6.0_21/jre/lib/charsets.jar"/>
+            <include name="../../Langs/jdk1.6.0_21/jre/lib/deploy.jar"/>
+            <include name="../../Langs/jdk1.6.0_21/jre/lib/javaws.jar"/>
+            <include name="../../Langs/jdk1.6.0_21/jre/lib/jce.jar"/>
+            <include name="../../Langs/jdk1.6.0_21/jre/lib/jsse.jar"/>
+            <include name="../../Langs/jdk1.6.0_21/jre/lib/management-agent.jar"/>
+            <include name="../../Langs/jdk1.6.0_21/jre/lib/plugin.jar"/>
+            <include name="../../Langs/jdk1.6.0_21/jre/lib/resources.jar"/>
+            <include name="../../Langs/jdk1.6.0_21/jre/lib/rt.jar"/>
+            <include name="../../Langs/jdk1.6.0_21/jre/lib/ext/dnsns.jar"/>
+            <include name="../../Langs/jdk1.6.0_21/jre/lib/ext/localedata.jar"/>
+            <include name="../../Langs/jdk1.6.0_21/jre/lib/ext/sunjce_provider.jar"/>
+            <include name="../../Langs/jdk1.6.0_21/jre/lib/ext/sunmscapi.jar"/>
+            <include name="../../Langs/jdk1.6.0_21/jre/lib/ext/sunpkcs11.jar"/>
+            <include name="lib/alloy.jar"/>
+            <include name="lib/annotations.jar"/>
+            <include name="lib/asm-commons.jar"/>
+            <include name="lib/asm-tree-3.0.jar"/>
+            <include name="lib/asm.jar"/>
+            <include name="lib/automaton.jar"/>
+            <include name="lib/batik.jar"/>
+            <include name="lib/boot.jar"/>
+            <include name="lib/bootstrap.jar"/>
+            <include name="lib/cglib-2.2.jar"/>
+            <include name="lib/commons-codec-1.3.jar"/>
+            <include name="lib/commons-collections.jar"/>
+            <include name="lib/commons-lang-2.4.jar"/>
+            <include name="lib/commons-net-2.0-patched.jar"/>
+            <include name="lib/dtdparser113.jar"/>
+            <include name="lib/extensions.jar"/>
+            <include name="lib/forms_rt.jar"/>
+            <include name="lib/foundrylogic-vpp-2.2.1.jar"/>
+            <include name="lib/freemarker.jar"/>
+            <include name="lib/groovy-all-1.7.3.jar"/>
+            <include name="lib/guava-r06.jar"/>
+            <include name="lib/icons.jar"/>
+            <include name="lib/idea-jsp-openapi.jar"/>
+            <include name="lib/idea_rt.jar"/>
+            <include name="lib/jasper21_rt.jar"/>
+            <include name="lib/jasper2_rt.jar"/>
+            <include name="lib/javac2.jar"/>
+            <include name="lib/jaxen-1.1.3.jar"/>
+            <include name="lib/jcip-annotations.jar"/>
+            <include name="lib/jdom.jar"/>
+            <include name="lib/jgoodies-forms.jar"/>
+            <include name="lib/jh.jar"/>
+            <include name="lib/jna-utils.jar"/>
+            <include name="lib/jna.jar"/>
+            <include name="lib/jsf-api.jar"/>
+            <include name="lib/jsp-api.jar"/>
+            <include name="lib/jsr173_1.0_api.jar"/>
+            <include name="lib/junit-4.8.jar"/>
+            <include name="lib/junit.jar"/>
+            <include name="lib/log4j.jar"/>
+            <include name="lib/looks-2.2.2.jar"/>
+            <include name="lib/microba.jar"/>
+            <include name="lib/nanoxml-2.2.3.jar"/>
+            <include name="lib/openapi.jar"/>
+            <include name="lib/org.eclipse.jdt.core_3.5.2.v_981_R35x.jar"/>
+            <include name="lib/oromatcher.jar"/>
+            <include name="lib/picocontainer.jar"/>
+            <include name="lib/resolver.jar"/>
+            <include name="lib/resources.jar"/>
+            <include name="lib/resources_en.jar"/>
+            <include name="lib/serviceMessages.jar"/>
+            <include name="lib/servlet-api.jar"/>
+            <include name="lib/trove4j.jar"/>
+            <include name="lib/trove4j_src.jar"/>
+            <include name="lib/util.jar"/>
+            <include name="lib/velocity.jar"/>
+            <include name="lib/winp-1.14.jar"/>
+            <include name="lib/xbean.jar"/>
+            <include name="lib/xerces.jar"/>
+            <include name="lib/xml-apis.jar"/>
+            <include name="lib/xmlrpc-2.0.jar"/>
+            <include name="lib/xpp3-1.1.4-min.jar"/>
+            <include name="lib/xstream.jar"/>
+            <include name="lib/yjp-controller-api-redist.jar"/>
+            <include name="plugins/JavaEE/lib/javaee-openapi.jar"/>
+            <include name="plugins/JavaEE/lib/jpa-console.jar"/>
+            <include name="plugins/JavaEE/lib/resources_en.jar"/>
+            <include name="plugins/JSF/lib/jsf-support.jar"/>
+            <include name="plugins/JSF/lib/resources_en.jar"/>
+            <include name="plugins/PersistenceSupport/lib/persistence-openapi.jar"/>
+            <include name="plugins/PersistenceSupport/lib/resources_en.jar"/>
+            <include name="plugins/DatabaseSupport/lib/database-openapi.jar"/>
+            <include name="plugins/DatabaseSupport/lib/jdbc-console.jar"/>
+            <include name="plugins/DatabaseSupport/lib/resources_en.jar"/>
+            <include name="plugins/css/lib/css-openapi.jar"/>
+            <include name="plugins/css/lib/resources_en.jar"/>
+            <include name="lib/idea.jar"/>
+        </fileset>
+    </path>
+
+    <property name="project.jdk.home" value="${jdk.home.idea}"/>
+    <property name="project.jdk.bin" value="${jdk.bin.idea}"/>
+    <property name="project.jdk.classpath" value="jdk.classpath.idea"/>
+
+    <!-- Modules -->
+
+
+    <!-- Module FavoriteFolders -->
+
+    <dirname property="module.favoritefolders.basedir" file="${ant.file}"/>
+
+
+    <property name="module.jdk.home.favoritefolders" value="${project.jdk.home}"/>
+    <property name="module.jdk.bin.favoritefolders" value="${project.jdk.bin}"/>
+    <property name="module.jdk.classpath.favoritefolders" value="${project.jdk.classpath}"/>
+
+    <property name="compiler.args.favoritefolders" value="${compiler.args}"/>
+
+    <property name="favoritefolders.output.dir"
+              value="${module.favoritefolders.basedir}/out/production/FavoriteFolders"/>
+    <property name="favoritefolders.testoutput.dir" value="${module.favoritefolders.basedir}/out/test/FavoriteFolders"/>
+
+    <path id="favoritefolders.module.bootclasspath">
+        <!-- Paths to be included in compilation bootclasspath -->
+    </path>
+
+    <path id="favoritefolders.module.production.classpath">
+        <path refid="${module.jdk.classpath.favoritefolders}"/>
+    </path>
+
+    <path id="favoritefolders.runtime.production.module.classpath">
+        <pathelement location="${favoritefolders.output.dir}"/>
+    </path>
+
+    <path id="favoritefolders.module.classpath">
+        <path refid="${module.jdk.classpath.favoritefolders}"/>
+        <pathelement location="${favoritefolders.output.dir}"/>
+    </path>
+
+    <path id="favoritefolders.runtime.module.classpath">
+        <pathelement location="${favoritefolders.testoutput.dir}"/>
+        <pathelement location="${favoritefolders.output.dir}"/>
+    </path>
+
+
+    <patternset id="excluded.from.module.favoritefolders">
+        <patternset refid="ignored.files"/>
+    </patternset>
+
+    <patternset id="excluded.from.compilation.favoritefolders">
+        <patternset refid="excluded.from.module.favoritefolders"/>
+    </patternset>
+
+    <path id="favoritefolders.module.sourcepath">
+        <dirset dir="${module.favoritefolders.basedir}">
+            <include name="src/java"/>
+            <include name="src/res"/>
+        </dirset>
+    </path>
+
+
+    <target name="compile.module.favoritefolders"
+            depends="compile.module.favoritefolders.production,compile.module.favoritefolders.tests"
+            description="Compile module FavoriteFolders"/>
+
+    <target name="compile.module.favoritefolders.production"
+            description="Compile module FavoriteFolders; production classes">
+        <mkdir dir="${favoritefolders.output.dir}"/>
+        <javac destdir="${favoritefolders.output.dir}" debug="${compiler.debug}"
+               nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true"
+               executable="${module.jdk.bin.favoritefolders}/javac">
+            <compilerarg line="${compiler.args.favoritefolders}"/>
+            <bootclasspath refid="favoritefolders.module.bootclasspath"/>
+            <classpath refid="favoritefolders.module.production.classpath"/>
+            <src refid="favoritefolders.module.sourcepath"/>
+            <patternset refid="excluded.from.compilation.favoritefolders"/>
+        </javac>
+
+        <copy todir="${favoritefolders.output.dir}">
+            <fileset dir="${module.favoritefolders.basedir}/src/java">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+            <fileset dir="${module.favoritefolders.basedir}/src/res">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile.module.favoritefolders.tests" depends="compile.module.favoritefolders.production"
+            description="compile module FavoriteFolders; test classes" unless="skip.tests"/>
+
+    <target name="clean.module.favoritefolders" description="cleanup module">
+        <delete dir="${favoritefolders.output.dir}"/>
+        <delete dir="${favoritefolders.testoutput.dir}"/>
+    </target>
+
+    <property name="favoritefolders.plugin.path.jar" value="${module.favoritefolders.basedir}/FavoriteFolders.jar"/>
+
+    <!-- Build archive for plugin 'FavoriteFolders' -->
+    <target name="plugin.build.jar.favoritefolders" depends="compile.module.favoritefolders"
+            description="Build plugin archive for module &apos;FavoriteFolders&apos;">
+        <jar destfile="${favoritefolders.plugin.path.jar}" duplicate="preserve">
+            <zipfileset dir="${module.favoritefolders.basedir}/out/production/FavoriteFolders"/>
+            <zipfileset file="${module.favoritefolders.basedir}/META-INF/plugin.xml" prefix="META-INF"/>
+            <manifest>
+                <attribute name="Created-By" value="IntelliJ IDEA"/>
+                <attribute name="Manifest-Version" value="1.0"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="init" description="Build initialization">
+        <!-- Perform any build initialization in this target -->
+    </target>
+
+    <target name="clean" depends="clean.module.favoritefolders" description="cleanup all"/>
+
+    <target name="build.modules" depends="init, clean, plugin.build.jar.favoritefolders"
+            description="build all modules"/>
+
+    <target name="all" depends="build.modules" description="build all"/>
+</project>
