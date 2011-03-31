@@ -104,6 +104,7 @@ class FavoriteFolderChooser {
                     iconSelector.hidePopup();
                     VirtualFile[] files = FileChooser.chooseFiles(mainPanel, iconChooser, s);
                     if (files.length == 0) {
+                        iconSelector.getModel().setSelectedItem(icon);
                         return;
                     }
 
@@ -116,6 +117,7 @@ class FavoriteFolderChooser {
                     if (newIcon == null) {
                         // Show error
                         JOptionPane.showMessageDialog(mainPanel, FavoriteFoldersBundle.message("FavoriteFolder.ErrorDialog.invalidImage"));
+                        iconSelector.getModel().setSelectedItem(icon);
                         return;
                     }
                 }
