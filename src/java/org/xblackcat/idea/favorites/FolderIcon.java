@@ -72,10 +72,21 @@ public enum FolderIcon implements IIconGetter {
 
         ImageIcon icon = new ImageIcon(file.contentsToByteArray());
 
-        if (icon.getIconHeight() > 16 || icon.getIconWidth() > 16) {
+        int height = icon.getIconHeight();
+        int width = icon.getIconWidth();
+        if (height > 16 || width > 16) {
             BufferedImage im = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 
-            im.getGraphics().drawImage(icon.getImage(), 0, 0, 16, 16, null);
+            if (height == width) {
+                im.getGraphics().drawImage(icon.getImage(), 0, 0, 16, 16, null);
+            } else if (height > width) {
+                int newHeight = (int) ((height * 16.) / width);
+                im.getGraphics().drawImage(icon.getImage(), 0, 0, 16, newHeight, null);
+            } else {
+                int newWidth = (int) ((width * 16.) / height);
+                im.getGraphics().drawImage(icon.getImage(), 0, 0, newWidth, 16, null);
+            }
+
 
             icon = new ImageIcon(im);
         }
