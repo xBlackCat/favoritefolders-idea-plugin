@@ -38,9 +38,11 @@ class FavoriteFolderChooser {
         mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(centerPane, BorderLayout.NORTH);
 
+        final JComboBox iconSelector = new JComboBox(FolderIcon.values());
+
         final JTextField filePathField = new JTextField(selectedFolder == null ? null : selectedFolder.getPresentableUrl(), 40);
         filePathField.setEditable(false);
-        FixedSizeButton browseDirectoryButton = new FixedSizeButton(filePathField);
+        FixedSizeButton browseDirectoryButton = new FixedSizeButton(iconSelector);
         TextFieldWithBrowseButton.MyDoClickAction.addTo(browseDirectoryButton, filePathField);
         browseDirectoryButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -75,7 +77,6 @@ class FavoriteFolderChooser {
         selectFolderPane.add(browseDirectoryButton, BorderLayout.EAST);
         fieldsPane.add(selectFolderPane);
 
-        final JComboBox iconSelector = new JComboBox(FolderIcon.values());
         iconSelector.getModel().setSelectedItem(icon);
         iconSelector.setRenderer(new ListCellRendererWrapper<IIconGetter>(iconSelector) {
             @Override
@@ -124,7 +125,18 @@ class FavoriteFolderChooser {
             }
         });
 
-        fieldsPane.add(iconSelector);
+        FixedSizeButton browseIconButton = new FixedSizeButton(iconSelector);
+        browseIconButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                iconSelector.setSelectedItem(FolderIcon.Custom);
+            }
+        });
+
+        JPanel selectIconPane = new JPanel(new BorderLayout(5, 5));
+        selectIconPane.add(iconSelector, BorderLayout.CENTER);
+        selectIconPane.add(browseIconButton, BorderLayout.EAST);
+        fieldsPane.add(selectIconPane);
     }
 
     public JComponent getMainPanel() {
