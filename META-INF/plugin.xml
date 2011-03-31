@@ -5,11 +5,11 @@
 <b>v0.0.0.1</b> - Initial revision.
 <b>v0.0.0.2</b> - Allow to install plugin in all Idea-based products.
 <b>v0.0.0.3</b> - Allow to set custom name to favorite folder (to show in tooltip)
-<b>v0.0.0.4</b> - Allow to set custom icon to favorite folder.
+<b>v0.0.0.4</b> - Add browser button to select custom icon for favorite folder. Small fixes.
         </pre>]]>
     </change-notes>
     <version>0.0.0.4</version>
-    <vendor url="http://code.google.com/p/favoritefolders-idea-plugin/">xBlackCat</vendor>
+    <vendor email="xblackcat@gmail.com" url="http://code.google.com/p/favoritefolders-idea-plugin/">xBlackCat</vendor>
     <idea-version since-build="103.1"/>
     <depends>com.intellij.modules.lang</depends>
 
@@ -21,8 +21,6 @@
     </application-components>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationConfigurable
-                instance="org.xblackcat.idea.favorites.FavoriteFoldersConfigPane"
-                id="favoritefolders"/>
+        <applicationConfigurable instance="org.xblackcat.idea.favorites.FavoriteFoldersConfigPane" id="favoritefolders"/>
     </extensions>
 </idea-plugin>
