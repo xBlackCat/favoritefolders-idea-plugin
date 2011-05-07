@@ -18,11 +18,14 @@ import java.io.IOException;
  * @author xBlackCat
  */
 class FavoriteFolderChooser {
+    private static final FileChooserDescriptor FAVORITE_FOLDER_DESCRIPTOR = new FileChooserDescriptor(false, true, true, false, true, false);
+    private static final FileChooserDescriptor FAVORITE_ICON_DESCRIPTOR = new FileChooserDescriptor(true, false, true, false, true, false);
+
     private boolean canceled = true;
     private VirtualFile selectedFolder = null;
+
     private IIconGetter icon = FolderIcon.Default;
     private String name;
-
     private JComponent mainPanel;
     private final JTextField favoriteNameField;
 
@@ -46,8 +49,7 @@ class FavoriteFolderChooser {
         TextFieldWithBrowseButton.MyDoClickAction.addTo(browseDirectoryButton, filePathField);
         browseDirectoryButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                FileChooserDescriptor descriptor = new FileChooserDescriptor(false, true, true, false, true, false);
-                VirtualFile[] files = FileChooser.chooseFiles(mainPanel, descriptor, selectedFolder);
+                VirtualFile[] files = FileChooser.chooseFiles(mainPanel, FAVORITE_FOLDER_DESCRIPTOR, selectedFolder);
                 if (files.length != 0) {
                     selectedFolder = files[0];
                     filePathField.setText(selectedFolder.getPresentableUrl());
@@ -93,7 +95,6 @@ class FavoriteFolderChooser {
                 if (newIcon == FolderIcon.Custom) {
                     newIcon = null;
 
-                    FileChooserDescriptor iconChooser = new FileChooserDescriptor(true, false, true, false, true, false);
                     VirtualFile s;
                     if (icon.isCustom()) {
                         s = VirtualFileManager.getInstance().findFileByUrl(icon.getName());
@@ -102,7 +103,7 @@ class FavoriteFolderChooser {
                     }
 
                     iconSelector.hidePopup();
-                    VirtualFile[] files = FileChooser.chooseFiles(mainPanel, iconChooser, s);
+                    VirtualFile[] files = FileChooser.chooseFiles(mainPanel, FAVORITE_ICON_DESCRIPTOR, s);
                     if (files.length == 0) {
                         iconSelector.getModel().setSelectedItem(icon);
                         return;
