@@ -1,16 +1,16 @@
 <idea-plugin version="2">
     <name>FavoriteFolders</name>
     <description>Adds favorite folders into FileChooser dialog toolbar.</description>
-    <change-notes><![CDATA[<pre>
-<b>v0.0.0.1</b> - Initial revision.
-<b>v0.0.0.2</b> - Allow to install plugin in all Idea-based products.
-<b>v0.0.0.3</b> - Allow to set custom name to favorite folder (to show in tooltip)
-<b>v0.0.0.4</b> - Allow to set custom icon to favorite folder.
-<b>v0.0.0.5</b> - Add browse button to select custom icon for favorite folder. Small fixes.
-<b>v0.0.0.6</b> - Add project-level favorite folders configuration.
-        </pre>]]>
+    <change-notes><![CDATA[<ul>
+<li><b>v0.0.0.1</b> - Initial revision.</li>
+<li><b>v0.0.0.2</b> - Allow to install plugin in all Idea-based products.</li>
+<li><b>v0.0.0.3</b> - Allow to set custom name to favorite folder (to show in tooltip)</li>
+<li><b>v0.0.0.4</b> - Allow to set custom icon to favorite folder.</li>
+<li><b>v0.0.0.5</b> - Browse button to select custom icon for favorite folder. Small fixes.</li>
+<li><b>v1.0</b> - Project-level favorite folders configuration.</li>
+        </ul>]]>
     </change-notes>
-    <version>0.0.0.5</version>
+    <version>1.0</version>
     <vendor email="xblackcat@gmail.com" url="http://code.google.com/p/favoritefolders-idea-plugin/">xBlackCat</vendor>
     <idea-version since-build="103.1"/>
     <depends>com.intellij.modules.lang</depends>
