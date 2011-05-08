@@ -2,12 +2,7 @@ package org.xblackcat.idea.favorites;
 
 import com.intellij.openapi.components.*;
 import com.intellij.openapi.diagnostic.Logger;
-import org.apache.commons.lang.StringUtils;
-import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author xBlackCat
@@ -39,7 +34,7 @@ public class ProjectFavoriteFoldersPlugin extends AFavoritesContainer implements
     }
 
     @Override
-    protected void updateFavorites() {
+    protected void updateFavorites(boolean firstRun) {
         Utils.reregisterFavorites();
     }
 

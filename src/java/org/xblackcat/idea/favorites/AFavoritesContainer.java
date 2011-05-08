@@ -23,7 +23,7 @@ abstract class AFavoritesContainer implements BaseComponent, PersistentStateComp
 
         this.favorites.addAll(favorites);
 
-        updateFavorites();
+        updateFavorites(false);
     }
 
     @Override
@@ -62,16 +62,16 @@ abstract class AFavoritesContainer implements BaseComponent, PersistentStateComp
             favorites.add(new FavoriteFolder(name, url, icon));
         }
 
-        updateFavorites();
+        updateFavorites(true);
     }
 
-    protected abstract void updateFavorites();
+    protected abstract void updateFavorites(boolean firstRun);
 
     public void initComponent() {
     }
 
     public void disposeComponent() {
         favorites.clear();
-        updateFavorites();
+        updateFavorites(false);
     }
 }

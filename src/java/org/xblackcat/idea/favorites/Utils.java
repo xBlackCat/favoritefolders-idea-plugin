@@ -24,14 +24,22 @@ final class Utils {
     }
 
     static void reregisterFavorites() {
-        Application app = ApplicationManager.getApplication();
-        reregisterFavorites(app.getComponent(FavoriteFoldersPlugin.class));
+        reregisterFavorites(false);
     }
 
-    static void reregisterFavorites(AFavoritesContainer component) {
+    static void reregisterFavorites(boolean skipProjectFavorites) {
+        Application app = ApplicationManager.getApplication();
+        reregisterFavorites(app.getComponent(FavoriteFoldersPlugin.class), skipProjectFavorites);
+    }
+
+    static void reregisterFavorites(AFavoritesContainer component, boolean skipProjectFavorites) {
         unregisterFavorites();
 
         int nextIndex = registerFavorites(component.getFavorites(), 1);
+
+        if (skipProjectFavorites) {
+            return;
+        }
 
         ProjectManager projectManager = ProjectManager.getInstance();
         Project[] openProjects = projectManager.getOpenProjects();
