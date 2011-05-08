@@ -8,7 +8,7 @@ import java.lang.ref.Reference;
 import java.lang.ref.SoftReference;
 import java.util.ResourceBundle;
 
-public class FavoriteFoldersBundle {
+class FavoriteFoldersBundle {
     private static Reference<ResourceBundle> ourBundle;
 
     @NonNls

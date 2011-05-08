@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author xBlackCat
  */
-public class ProjectFavoriteFoldersConfigPane extends AConfigPane {
+class ProjectFavoriteFoldersConfigPane extends AConfigPane {
     private final Project project;
 
     public ProjectFavoriteFoldersConfigPane(Project project) {

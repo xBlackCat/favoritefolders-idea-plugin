@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author xBlackCat
  */
-public abstract class AConfigPane extends BaseConfigurable implements SearchableConfigurable {
+abstract class AConfigPane extends BaseConfigurable implements SearchableConfigurable {
     private FavoriteFoldersConfigForm configForm;
 
     @Nls
@@ -73,7 +73,7 @@ public abstract class AConfigPane extends BaseConfigurable implements Searchable
         return null;
     }
 
-    protected class FavoriteFoldersConfigForm extends JPanel {
+    private class FavoriteFoldersConfigForm extends JPanel {
         private final List<FavoriteFolder> favoriteList = new ArrayList<FavoriteFolder>();
         private final FavoritesTableModel model = new FavoritesTableModel();
         private final AFavoritesContainer plugin;

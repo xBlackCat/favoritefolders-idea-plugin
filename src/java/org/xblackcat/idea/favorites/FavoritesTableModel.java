@@ -8,7 +8,7 @@ import javax.swing.*;
  * @author xBlackCat
  */
 
-public class FavoritesTableModel extends AddEditRemovePanel.TableModel<FavoriteFolder> {
+class FavoritesTableModel extends AddEditRemovePanel.TableModel<FavoriteFolder> {
     @Override
     public String getColumnName(int column) {
         switch (column) {

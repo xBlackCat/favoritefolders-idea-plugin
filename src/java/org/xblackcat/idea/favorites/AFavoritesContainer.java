@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author xBlackCat
  */
-public abstract class AFavoritesContainer implements BaseComponent, PersistentStateComponent<Element> {
+abstract class AFavoritesContainer implements BaseComponent, PersistentStateComponent<Element> {
     protected List<FavoriteFolder> favorites = new ArrayList<FavoriteFolder>();
 
     List<FavoriteFolder> getFavorites() {

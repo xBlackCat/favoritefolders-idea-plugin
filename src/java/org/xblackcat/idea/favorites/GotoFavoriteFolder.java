@@ -13,12 +13,12 @@ import org.apache.commons.lang.StringUtils;
  */
 
 @SuppressWarnings({"ComponentNotRegistered"})
-public class GotoFavoriteFolder extends FileChooserAction {
+class GotoFavoriteFolder extends FileChooserAction {
     private static final Logger LOG = Logger.getInstance("#org.xblackcat.idea.favorites.GotoModuleDirectory");
 
     private final FavoriteFolder favoriteFolder;
 
-    public GotoFavoriteFolder(FavoriteFolder folder) {
+    GotoFavoriteFolder(FavoriteFolder folder) {
         super(
                 StringUtils.isBlank(folder.getName()) ?
                         FavoriteFoldersBundle.message("action.FileChooser.FavoriteFolder.text", folder.getFile().getPath()) :

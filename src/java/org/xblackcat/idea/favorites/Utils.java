@@ -16,47 +16,11 @@ import java.util.List;
 /**
  * @author xBlackCat
  */
-public final class Utils {
+final class Utils {
     @NonNls
-    public static final String ACTION_PREFIX = "FavoriteFolder.Favorite_";
+    private static final String ACTION_PREFIX = "FavoriteFolder.Favorite_";
 
     private Utils() {
-    }
-
-    static void addShortCut(int id) {
-        KeyStroke stroke = null;
-        if (id < 7) {
-            stroke = KeyStroke.getKeyStroke(id + KeyEvent.VK_3, KeyEvent.CTRL_DOWN_MASK);
-        } else if (id == 7) {
-            stroke = KeyStroke.getKeyStroke(KeyEvent.VK_0, KeyEvent.CTRL_DOWN_MASK);
-        } else if (id < 17) {
-            stroke = KeyStroke.getKeyStroke(id + KeyEvent.VK_0 - 7, KeyEvent.CTRL_DOWN_MASK + KeyEvent.SHIFT_DOWN_MASK);
-        } else if (id == 17) {
-            stroke = KeyStroke.getKeyStroke(KeyEvent.VK_0, KeyEvent.CTRL_DOWN_MASK + KeyEvent.SHIFT_DOWN_MASK);
-        }
-
-        if (stroke != null) {
-            KeymapManager km = KeymapManager.getInstance();
-            Keymap keymap = km.getKeymap(KeymapManager.DEFAULT_IDEA_KEYMAP);
-
-            KeyboardShortcut shortcut = new KeyboardShortcut(stroke, null);
-            keymap.addShortcut(ACTION_PREFIX + id, shortcut);
-        }
-    }
-
-    static void unregisterFavorites() {
-        ActionManager am = ActionManager.getInstance();
-        KeymapManager km = KeymapManager.getInstance();
-        Keymap keymap = km.getKeymap(KeymapManager.DEFAULT_IDEA_KEYMAP);
-
-        DefaultActionGroup group = (DefaultActionGroup) am.getAction("FileChooserToolbar");
-
-        String[] actionIds = am.getActionIds(ACTION_PREFIX);
-        for (String actionId : actionIds) {
-            group.remove(am.getAction(actionId));
-            am.unregisterAction(actionId);
-            keymap.removeAllActionShortcuts(actionId);
-        }
     }
 
     static void reregisterFavorites() {
@@ -85,7 +49,43 @@ public final class Utils {
         }
     }
 
-    static int registerFavorites(List<FavoriteFolder> favorites, int startIndex) {
+    private static void addShortCut(int id) {
+        KeyStroke stroke = null;
+        if (id < 7) {
+            stroke = KeyStroke.getKeyStroke(id + KeyEvent.VK_3, KeyEvent.CTRL_DOWN_MASK);
+        } else if (id == 7) {
+            stroke = KeyStroke.getKeyStroke(KeyEvent.VK_0, KeyEvent.CTRL_DOWN_MASK);
+        } else if (id < 17) {
+            stroke = KeyStroke.getKeyStroke(id + KeyEvent.VK_0 - 7, KeyEvent.CTRL_DOWN_MASK + KeyEvent.SHIFT_DOWN_MASK);
+        } else if (id == 17) {
+            stroke = KeyStroke.getKeyStroke(KeyEvent.VK_0, KeyEvent.CTRL_DOWN_MASK + KeyEvent.SHIFT_DOWN_MASK);
+        }
+
+        if (stroke != null) {
+            KeymapManager km = KeymapManager.getInstance();
+            Keymap keymap = km.getKeymap(KeymapManager.DEFAULT_IDEA_KEYMAP);
+
+            KeyboardShortcut shortcut = new KeyboardShortcut(stroke, null);
+            keymap.addShortcut(ACTION_PREFIX + id, shortcut);
+        }
+    }
+
+    private static void unregisterFavorites() {
+        ActionManager am = ActionManager.getInstance();
+        KeymapManager km = KeymapManager.getInstance();
+        Keymap keymap = km.getKeymap(KeymapManager.DEFAULT_IDEA_KEYMAP);
+
+        DefaultActionGroup group = (DefaultActionGroup) am.getAction("FileChooserToolbar");
+
+        String[] actionIds = am.getActionIds(ACTION_PREFIX);
+        for (String actionId : actionIds) {
+            group.remove(am.getAction(actionId));
+            am.unregisterAction(actionId);
+            keymap.removeAllActionShortcuts(actionId);
+        }
+    }
+
+    private static int registerFavorites(List<FavoriteFolder> favorites, int startIndex) {
         ActionManager am = ActionManager.getInstance();
 
         DefaultActionGroup group = (DefaultActionGroup) am.getAction("FileChooserToolbar");

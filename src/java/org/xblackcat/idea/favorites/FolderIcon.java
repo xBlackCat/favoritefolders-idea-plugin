@@ -15,7 +15,7 @@ import java.io.IOException;
  * @author xBlackCat
  */
 
-public enum FolderIcon implements IIconGetter {
+enum FolderIcon implements IIconGetter {
     Default(IconLoader.getIcon("/nodes/folder.png")),
     Custom(IconLoader.getIcon("/nodes/newFolder.png")),
     DataSource(IconLoader.getIcon("/nodes/DataSource.png")),
