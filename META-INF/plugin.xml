@@ -6,7 +6,8 @@
 <b>v0.0.0.2</b> - Allow to install plugin in all Idea-based products.
 <b>v0.0.0.3</b> - Allow to set custom name to favorite folder (to show in tooltip)
 <b>v0.0.0.4</b> - Allow to set custom icon to favorite folder.
-<b>v0.0.0.5</b> - Add browser button to select custom icon for favorite folder. Small fixes.
+<b>v0.0.0.5</b> - Add browse button to select custom icon for favorite folder. Small fixes.
+<b>v0.0.0.6</b> - Add project-level favorite folders configuration.
         </pre>]]>
     </change-notes>
     <version>0.0.0.5</version>
@@ -21,7 +22,14 @@
         </component>
     </application-components>
 
+    <project-components>
+        <component>
+            <implementation-class>org.xblackcat.idea.favorites.ProjectFavoriteFoldersPlugin</implementation-class>
+        </component>
+    </project-components>
+
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable instance="org.xblackcat.idea.favorites.FavoriteFoldersConfigPane" id="favoritefolders"/>
+        <projectConfigurable instance="org.xblackcat.idea.favorites.ProjectFavoriteFoldersConfigPane" id="projectfavoritefolders"/>
     </extensions>
 </idea-plugin>
