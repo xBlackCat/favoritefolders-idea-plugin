@@ -69,6 +69,10 @@ enum FolderIcon implements IIconGetter {
 
     public static IIconGetter loadIcon(String url) throws IOException {
         VirtualFile file = VirtualFileManager.getInstance().findFileByUrl(url);
+        if (file == null) {
+            // File no longer exists - return common custom folder icon.
+            return Default;
+        }
 
         ImageIcon icon = new ImageIcon(file.contentsToByteArray());
 
@@ -98,7 +102,7 @@ enum FolderIcon implements IIconGetter {
         try {
             return FolderIcon.valueOf(iconName);
         } catch (IllegalArgumentException e) {
-            // Fall through
+            // Fall through - check external icon
         }
 
         // Check if the name is uri
