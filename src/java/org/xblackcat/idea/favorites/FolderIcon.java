@@ -71,7 +71,7 @@ enum FolderIcon implements IIconGetter {
         VirtualFile file = VirtualFileManager.getInstance().findFileByUrl(url);
         if (file == null) {
             // File no longer exists - return common custom folder icon.
-            return Default;
+            return Custom;
         }
 
         ImageIcon icon = new ImageIcon(file.contentsToByteArray());
