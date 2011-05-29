@@ -4,6 +4,7 @@ import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -31,8 +32,18 @@ public class FavoriteFoldersPlugin extends AFavoritesContainer implements Applic
     }
 
     @Override
+    protected AConfigPane getConfigPane() {
+        return new FavoriteFoldersConfigPane();
+    }
+
+    @Override
     protected void updateFavorites(boolean firstRun) {
         Utils.reregisterFavorites(this, firstRun);
+    }
+
+    @Override
+    public Project getProject() {
+        return null;
     }
 
 }

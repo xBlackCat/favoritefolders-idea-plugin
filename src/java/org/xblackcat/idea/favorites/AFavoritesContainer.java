@@ -1,10 +1,25 @@
 package org.xblackcat.idea.favorites;
 
+import com.intellij.ide.plugins.PluginManager;
+import com.intellij.ide.plugins.PluginManagerMain;
+import com.intellij.idea.IdeaApplication;
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationListener;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
+import com.intellij.openapi.application.Application;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.BaseComponent;
 import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.options.ShowSettingsUtil;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.impl.win32.IdeaWin32;
+import com.intellij.util.ArrayUtil;
 import org.apache.commons.lang.StringUtils;
 import org.jdom.Element;
+import org.jetbrains.annotations.NotNull;
 
+import javax.swing.event.HyperlinkEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,11 +74,49 @@ abstract class AFavoritesContainer implements BaseComponent, PersistentStateComp
 
             String icon = e.getAttributeValue("icon");
             String name = e.getAttributeValue("name");
-            favorites.add(new FavoriteFolder(name, url, icon));
+            FavoriteFolder folder = new FavoriteFolder(name, url, icon);
+            favorites.add(folder);
+
+
+            if (folder.getIcon() == FolderIcon.Custom) {
+                // Icon wasn't found - notify user.
+                final Notification notification = new Notification(
+                        "FavoriteFolders",
+                        "Favorite Folders: No icon",
+                        "Custom icon not found: it was moved or removed.</p>Click <a href\"\">here</a> to select another one",
+                        NotificationType.WARNING,
+                        new NotificationListener() {
+                            @Override
+                            public void hyperlinkUpdate(@NotNull Notification notification, @NotNull HyperlinkEvent event) {
+                                AConfigPane configurable = getConfigPane();
+                                ShowSettingsUtil.getInstance().editConfigurable(getProject(), configurable);
+                                if (areFavoritesValid()) {
+                                    notification.expire();
+                                }
+                            }
+
+                            private boolean areFavoritesValid() {
+                                for (FavoriteFolder ff : favorites) {
+                                    if (ff.getIcon() == FolderIcon.Custom) {
+                                        return false;
+                                    }
+                                }
+
+                                return true;
+                            }
+                        }
+                );
+
+                Notifications.Bus.notify(notification, getProject());
+            }
+
         }
 
         updateFavorites(true);
     }
+
+
+    protected abstract AConfigPane getConfigPane();
 
     protected abstract void updateFavorites(boolean firstRun);
 
@@ -74,4 +127,6 @@ abstract class AFavoritesContainer implements BaseComponent, PersistentStateComp
         favorites.clear();
         updateFavorites(false);
     }
+
+    public abstract Project getProject();
 }
