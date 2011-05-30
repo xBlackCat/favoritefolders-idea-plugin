@@ -51,4 +51,8 @@ class FavoriteFolder {
     public String getName() {
         return name;
     }
+
+    public boolean isIconValid() {
+        return icon != FolderIcon.Custom;
+    }
 }

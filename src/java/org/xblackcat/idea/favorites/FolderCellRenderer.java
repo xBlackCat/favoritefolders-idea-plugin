@@ -7,20 +7,17 @@ import java.awt.*;
 /**
  * @author xBlackCat
  */
-class FolderCellRenderer extends DefaultTableCellRenderer {
+class FolderCellRenderer extends ACellRenderer {
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-        FavoriteFolder ff = (FavoriteFolder) value;
-
-        if (ff.getFile() == null) {
-            setForeground(Color.RED);
-            setText(ff.getUrl());
-        } else {
+    protected void setValue(FavoriteFolder ff) {
+        if (ff.isFileValid()) {
             setText(ff.getFile().getPath());
+        } else {
+            setText(ff.getUrl());
+            setForeground(Color.white);
+            setBackground(Color.red);
         }
 
-        return this;
+        setToolTipText(getText());
     }
 }

@@ -7,7 +7,7 @@ import java.awt.*;
 /**
  * @author xBlackCat
  */
-class IconCellRenderer extends DefaultTableCellRenderer {
+class IconCellRenderer extends ACellRenderer {
     public IconCellRenderer() {
         super();
 
@@ -15,12 +15,14 @@ class IconCellRenderer extends DefaultTableCellRenderer {
     }
 
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
+    protected void setValue(FavoriteFolder ff) {
         setText(null);
-        setIcon((Icon) value);
+        IIconGetter icon = ff.getIcon();
+        setIcon(icon.getIcon());
+        setToolTipText(icon.getName());
 
-        return this;
+        if (!ff.isIconValid()) {
+            setBackground(Color.RED);
+        }
     }
 }

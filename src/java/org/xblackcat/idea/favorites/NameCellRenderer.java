@@ -9,18 +9,16 @@ import java.awt.*;
 /**
  * @author xBlackCat
  */
-class NameCellRenderer extends DefaultTableCellRenderer {
+class NameCellRenderer extends ACellRenderer {
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-        if (StringUtils.isBlank((String) value)) {
+    protected void setValue(FavoriteFolder value) {
+        if (StringUtils.isBlank(value.getName())) {
             setText("<Default>");
+            setToolTipText("");
         } else {
-            setText((String) value);
+            setText(value.getName());
+            setToolTipText(getText());
         }
         setIcon(null);
-
-        return this;
     }
 }

@@ -64,6 +64,8 @@ abstract class AFavoritesContainer implements BaseComponent, PersistentStateComp
     @Override
     public void loadState(Element foldersConfig) {
         favorites = new ArrayList<FavoriteFolder>();
+        boolean showNoIcon = false;
+        boolean showNoFolder = false;
 
         for (Element e : (List<Element>) foldersConfig.getChildren("folder")) {
             String url = e.getAttributeValue("url");
@@ -77,42 +79,43 @@ abstract class AFavoritesContainer implements BaseComponent, PersistentStateComp
             FavoriteFolder folder = new FavoriteFolder(name, url, icon);
             favorites.add(folder);
 
-
-            if (folder.getIcon() == FolderIcon.Custom) {
-                // Icon wasn't found - notify user.
-                final Notification notification = new Notification(
-                        "FavoriteFolders",
-                        "Favorite Folders: No icon",
-                        "Custom icon not found: it was moved or removed.</p>Click <a href\"\">here</a> to select another one",
-                        NotificationType.WARNING,
-                        new NotificationListener() {
-                            @Override
-                            public void hyperlinkUpdate(@NotNull Notification notification, @NotNull HyperlinkEvent event) {
-                                AConfigPane configurable = getConfigPane();
-                                ShowSettingsUtil.getInstance().editConfigurable(getProject(), configurable);
-                                if (areFavoritesValid()) {
-                                    notification.expire();
-                                }
-                            }
-
-                            private boolean areFavoritesValid() {
-                                for (FavoriteFolder ff : favorites) {
-                                    if (ff.getIcon() == FolderIcon.Custom) {
-                                        return false;
-                                    }
-                                }
-
-                                return true;
-                            }
-                        }
-                );
-
-                Notifications.Bus.notify(notification, getProject());
-            }
-
+            showNoIcon |= !folder.isIconValid();
+            showNoFolder |= !folder.isFileValid();
         }
 
         updateFavorites(true);
+
+        if (showNoIcon || showNoFolder) {
+            // Icon wasn't found - notify user.
+            final Notification notification = new Notification(
+                    "FavoriteFolders",
+                    "Favorite Folders: No icon",
+                    "Custom icon not found: it was moved or removed.</p>Click <a href\"\">here</a> to select another one",
+                    NotificationType.WARNING,
+                    new NotificationListener() {
+                        @Override
+                        public void hyperlinkUpdate(@NotNull Notification notification, @NotNull HyperlinkEvent event) {
+                            AConfigPane configurable = getConfigPane();
+                            ShowSettingsUtil.getInstance().editConfigurable(getProject(), configurable);
+                            if (areFavoritesValid()) {
+                                notification.expire();
+                            }
+                        }
+
+                        private boolean areFavoritesValid() {
+                            for (FavoriteFolder ff : favorites) {
+                                if (ff.getIcon() == FolderIcon.Custom) {
+                                    return false;
+                                }
+                            }
+
+                            return true;
+                        }
+                    }
+            );
+
+            Notifications.Bus.notify(notification, getProject());
+        }
     }
 
 

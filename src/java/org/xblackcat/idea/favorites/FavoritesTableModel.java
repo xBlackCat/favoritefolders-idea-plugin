@@ -30,29 +30,11 @@ class FavoritesTableModel extends AddEditRemovePanel.TableModel<FavoriteFolder> 
 
     @Override
     public Class getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return Icon.class;
-            case 1:
-                return String.class;
-            case 2:
-                return FavoriteFolder.class;
-        }
-
-        return null;
+        return FavoriteFolder.class;
     }
 
     @Override
     public Object getField(FavoriteFolder o, int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return o.getIcon().getIcon();
-            case 1:
-                return o.getName();
-            case 2:
-                return o;
-        }
-
-        return null;
+        return o;
     }
 }
