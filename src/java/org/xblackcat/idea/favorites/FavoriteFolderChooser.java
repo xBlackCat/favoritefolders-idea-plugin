@@ -58,7 +58,7 @@ class FavoriteFolderChooser {
         });
 
 
-        JPanel labelsPane = new JPanel(new GridLayout(0, 1));
+        JPanel labelsPane = new JPanel(new GridLayout(0, 1, 5, 5));
 
         centerPane.add(labelsPane, BorderLayout.WEST);
 
@@ -66,7 +66,7 @@ class FavoriteFolderChooser {
         labelsPane.add(new JLabel(FavoriteFoldersBundle.message("FavoriteFolder.AddDialog.SelectFolder.label")));
         labelsPane.add(new JLabel(FavoriteFoldersBundle.message("FavoriteFolder.AddDialog.SelectIcon.label")));
 
-        JPanel fieldsPane = new JPanel(new GridLayout(0, 1));
+        JPanel fieldsPane = new JPanel(new GridLayout(0, 1, 5, 5));
 
         centerPane.add(fieldsPane, BorderLayout.CENTER);
 
