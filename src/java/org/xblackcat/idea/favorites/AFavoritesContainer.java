@@ -1,20 +1,13 @@
 package org.xblackcat.idea.favorites;
 
-import com.intellij.ide.plugins.PluginManager;
-import com.intellij.ide.plugins.PluginManagerMain;
-import com.intellij.idea.IdeaApplication;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationListener;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
-import com.intellij.openapi.application.Application;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.BaseComponent;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.impl.win32.IdeaWin32;
-import com.intellij.util.ArrayUtil;
 import org.apache.commons.lang.StringUtils;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
@@ -86,36 +79,44 @@ abstract class AFavoritesContainer implements BaseComponent, PersistentStateComp
         updateFavorites(true);
 
         if (showNoIcon || showNoFolder) {
-            // Icon wasn't found - notify user.
-            final Notification notification = new Notification(
-                    "FavoriteFolders",
-                    "Favorite Folders: No icon",
-                    "Custom icon not found: it was moved or removed.</p>Click <a href\"\">here</a> to select another one",
-                    NotificationType.WARNING,
-                    new NotificationListener() {
-                        @Override
-                        public void hyperlinkUpdate(@NotNull Notification notification, @NotNull HyperlinkEvent event) {
-                            AConfigPane configurable = getConfigPane();
-                            ShowSettingsUtil.getInstance().editConfigurable(getProject(), configurable);
-                            if (areFavoritesValid()) {
-                                notification.expire();
-                            }
-                        }
+            showNotify(showNoFolder);
+        }
+    }
 
-                        private boolean areFavoritesValid() {
-                            for (FavoriteFolder ff : favorites) {
-                                if (ff.getIcon() == FolderIcon.Custom) {
-                                    return false;
-                                }
-                            }
+    private void showNotify(boolean showNoFolder) {
+        String titleKey = showNoFolder ? "FavoriteFolder.WarningTip.nofolder.title" : "FavoriteFolder.WarningTip.noicon.title";
+        String tipKey = showNoFolder ? "FavoriteFolder.WarningTip.nofolder" : "FavoriteFolder.WarningTip.noicon";
 
-                            return true;
+        // Icon wasn't found - notify user.
+        final Notification notification = new Notification(
+                "FavoriteFolders",
+                FavoriteFoldersBundle.message(titleKey),
+                FavoriteFoldersBundle.message(tipKey),
+                NotificationType.WARNING,
+                new NotificationListener() {
+                    @Override
+                    public void hyperlinkUpdate(@NotNull Notification notification, @NotNull HyperlinkEvent event) {
+                        notification.expire();
+
+                        AConfigPane configurable = getConfigPane();
+                        ShowSettingsUtil.getInstance().editConfigurable(getProject(), configurable);
+
+                        // Check again
+                        for (FavoriteFolder ff : favorites) {
+                            if (!ff.isIconValid()) {
+                                showNotify(false);
+                                return;
+                            } else if (!ff.isFileValid()) {
+                                showNotify(true);
+                                return;
+                            }
                         }
                     }
-            );
 
-            Notifications.Bus.notify(notification, getProject());
-        }
+                }
+        );
+
+        Notifications.Bus.notify(notification, getProject());
     }
 
 
