@@ -116,7 +116,8 @@ abstract class AFavoritesContainer implements BaseComponent, PersistentStateComp
                 }
         );
 
-        Notifications.Bus.notify(notification, getProject());
+        Project targetProject = getProject() == null || getProject().isDefault() ? null : getProject();
+        Notifications.Bus.notify(notification, targetProject);
     }
 
 
