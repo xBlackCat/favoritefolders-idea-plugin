@@ -49,11 +49,12 @@ final class Utils {
                 nextIndex = registerFavorites(favorites, nextIndex);
             }
         } else {
-            List<FavoriteFolder> favorites = projectManager
-                    .getDefaultProject()
-                    .getComponent(ProjectFavoriteFoldersPlugin.class)
-                    .getFavorites();
-            registerFavorites(favorites, nextIndex);
+            Project defaultProject = projectManager.getDefaultProject();
+            ProjectFavoriteFoldersPlugin defaultProjectComponent = defaultProject.getComponent(ProjectFavoriteFoldersPlugin.class);
+            if (defaultProjectComponent != null) {
+                List<FavoriteFolder> favorites = defaultProjectComponent.getFavorites();
+                registerFavorites(favorites, nextIndex);
+            }
         }
     }
 
