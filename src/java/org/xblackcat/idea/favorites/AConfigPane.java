@@ -4,10 +4,9 @@ import com.intellij.ide.ui.UISettings;
 import com.intellij.openapi.options.BaseConfigurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
-import com.intellij.openapi.ui.DialogBuilder;
 import com.intellij.ui.AddEditRemovePanel;
 import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
@@ -96,14 +95,14 @@ abstract class AConfigPane extends BaseConfigurable implements SearchableConfigu
                 }
 
                 @Override
-                protected FavoriteFolder editItem(FavoriteFolder o) {
-                    FavoriteFolder folder = selectFolder(o);
-                    if (folder == null) {
+                protected FavoriteFolder editItem(@Nullable FavoriteFolder o) {
+                    FavoriteFolderChooser dialog = Utils.selectFolder(o, favoritesPanel, false);
+                    if (dialog == null) {
                         return null;
                     }
 
                     setModified(true);
-                    return folder;
+                    return dialog.getSelectedFolder();
                 }
             };
             favoritesPanel.setRenderer(0, new IconCellRenderer());
@@ -116,23 +115,6 @@ abstract class AConfigPane extends BaseConfigurable implements SearchableConfigu
             column.setResizable(false);
 
             add(favoritesPanel, BorderLayout.CENTER);
-        }
-
-        private FavoriteFolder selectFolder(FavoriteFolder folder) {
-            FavoriteFolderChooser dialog = new FavoriteFolderChooser(folder);
-
-            final DialogBuilder builder = new DialogBuilder(favoritesPanel);
-            builder.setPreferedFocusComponent(dialog.getFileLine());
-            builder.setCenterPanel(dialog.getMainPanel());
-            builder.setTitle(FavoriteFoldersBundle.message("FavoriteFolder.AddDialog.title"));
-            builder.showModal(true);
-            builder.getDialogWrapper().setResizable(false);
-
-            if (builder.getDialogWrapper().isOK()) {
-                return dialog.getSelectedFolder();
-            } else {
-                return null;
-            }
         }
 
         void reset() {

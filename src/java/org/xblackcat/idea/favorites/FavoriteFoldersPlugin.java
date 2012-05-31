@@ -3,7 +3,6 @@ package org.xblackcat.idea.favorites;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,8 +20,6 @@ import org.jetbrains.annotations.NotNull;
         }
 )
 public class FavoriteFoldersPlugin extends AFavoritesContainer implements ApplicationComponent {
-    private static final Logger LOG = Logger.getInstance("#org.xblackcat.idea.favorites.FavoriteFoldersPlugin");
-
     public FavoriteFoldersPlugin() {
     }
 
@@ -38,7 +35,7 @@ public class FavoriteFoldersPlugin extends AFavoritesContainer implements Applic
 
     @Override
     protected void updateFavorites(boolean firstRun) {
-        Utils.reregisterFavorites(this, firstRun);
+        Utils.updateFavorites(this, firstRun);
     }
 
     @Override

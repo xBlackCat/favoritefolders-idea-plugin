@@ -7,9 +7,11 @@ import com.intellij.openapi.keymap.Keymap;
 import com.intellij.openapi.keymap.KeymapManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
+import com.intellij.openapi.ui.DialogBuilder;
 import org.jetbrains.annotations.NonNls;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
@@ -23,17 +25,13 @@ final class Utils {
     private Utils() {
     }
 
-    static void reregisterFavorites() {
-        reregisterFavorites(false);
-    }
-
-    static void reregisterFavorites(boolean skipProjectFavorites) {
+    static void updateFavorites() {
         Application app = ApplicationManager.getApplication();
-        reregisterFavorites(app.getComponent(FavoriteFoldersPlugin.class), skipProjectFavorites);
+        updateFavorites(app.getComponent(FavoriteFoldersPlugin.class), false);
     }
 
-    static void reregisterFavorites(AFavoritesContainer component, boolean skipProjectFavorites) {
-        unregisterFavorites();
+    static void updateFavorites(AFavoritesContainer component, boolean skipProjectFavorites) {
+        removeFavorites();
 
         int nextIndex = registerFavorites(component.getFavorites(), 1);
 
@@ -65,21 +63,23 @@ final class Utils {
         } else if (id == 7) {
             stroke = KeyStroke.getKeyStroke(KeyEvent.VK_0, KeyEvent.CTRL_DOWN_MASK);
         } else if (id < 17) {
-            stroke = KeyStroke.getKeyStroke(id + KeyEvent.VK_0 - 7, KeyEvent.CTRL_DOWN_MASK + KeyEvent.SHIFT_DOWN_MASK);
+            stroke = KeyStroke.getKeyStroke(id + KeyEvent.VK_0 - 7, KeyEvent.CTRL_DOWN_MASK | KeyEvent.SHIFT_DOWN_MASK);
         } else if (id == 17) {
-            stroke = KeyStroke.getKeyStroke(KeyEvent.VK_0, KeyEvent.CTRL_DOWN_MASK + KeyEvent.SHIFT_DOWN_MASK);
+            stroke = KeyStroke.getKeyStroke(KeyEvent.VK_0, KeyEvent.CTRL_DOWN_MASK | KeyEvent.SHIFT_DOWN_MASK);
         }
 
         if (stroke != null) {
             KeymapManager km = KeymapManager.getInstance();
             Keymap keymap = km.getKeymap(KeymapManager.DEFAULT_IDEA_KEYMAP);
 
-            KeyboardShortcut shortcut = new KeyboardShortcut(stroke, null);
-            keymap.addShortcut(ACTION_PREFIX + id, shortcut);
+            if (keymap != null) {
+                KeyboardShortcut shortcut = new KeyboardShortcut(stroke, null);
+                keymap.addShortcut(ACTION_PREFIX + id, shortcut);
+            }
         }
     }
 
-    private static void unregisterFavorites() {
+    private static void removeFavorites() {
         ActionManager am = ActionManager.getInstance();
         KeymapManager km = KeymapManager.getInstance();
         Keymap keymap = km.getKeymap(KeymapManager.DEFAULT_IDEA_KEYMAP);
@@ -90,7 +90,9 @@ final class Utils {
         for (String actionId : actionIds) {
             group.remove(am.getAction(actionId));
             am.unregisterAction(actionId);
-            keymap.removeAllActionShortcuts(actionId);
+            if (keymap != null) {
+                keymap.removeAllActionShortcuts(actionId);
+            }
         }
     }
 
@@ -106,7 +108,7 @@ final class Utils {
                 continue;
             }
 
-            GotoFavoriteFolder a = new GotoFavoriteFolder(fi);
+            GoToFavoriteFolder a = new GoToFavoriteFolder(fi);
             am.registerAction(ACTION_PREFIX + id, a);
             addShortCut(id);
 
@@ -120,5 +122,22 @@ final class Utils {
         }
 
         return id;
+    }
+
+    static FavoriteFolderChooser selectFolder(FavoriteFolder folder, Component parent, boolean showLevelBox) {
+        FavoriteFolderChooser dialog = new FavoriteFolderChooser(folder, showLevelBox);
+
+        final DialogBuilder builder = new DialogBuilder(parent);
+        builder.setPreferedFocusComponent(dialog.getFileLine());
+        builder.setCenterPanel(dialog.getMainPanel());
+        builder.setTitle(FavoriteFoldersBundle.message("FavoriteFolder.AddDialog.title"));
+        builder.showModal(true);
+        builder.getDialogWrapper().setResizable(false);
+
+        if (builder.getDialogWrapper().isOK()) {
+            return dialog;
+        } else {
+            return null;
+        }
     }
 }

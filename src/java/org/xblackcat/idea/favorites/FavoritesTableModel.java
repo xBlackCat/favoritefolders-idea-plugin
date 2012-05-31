@@ -2,8 +2,6 @@ package org.xblackcat.idea.favorites;
 
 import com.intellij.ui.AddEditRemovePanel;
 
-import javax.swing.*;
-
 /**
  * @author xBlackCat
  */

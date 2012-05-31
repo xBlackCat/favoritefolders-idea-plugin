@@ -1,7 +1,7 @@
 package org.xblackcat.idea.favorites;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
+import com.intellij.openapi.vfs.VirtualFile;
+
 import java.awt.*;
 
 /**
@@ -11,7 +11,12 @@ class FolderCellRenderer extends ACellRenderer {
     @Override
     protected void setValue(FavoriteFolder ff) {
         if (ff.isFileValid()) {
-            setText(ff.getFile().getPath());
+            final VirtualFile file = ff.getFile();
+            if (file != null) {
+                setText(file.getPath());
+            } else {
+                setText(null);
+            }
         } else {
             setText(ff.getUrl());
             setForeground(Color.white);

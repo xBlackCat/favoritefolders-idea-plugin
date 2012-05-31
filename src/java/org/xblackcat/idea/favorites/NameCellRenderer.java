@@ -2,10 +2,6 @@ package org.xblackcat.idea.favorites;
 
 import org.apache.commons.lang.StringUtils;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.*;
-
 /**
  * @author xBlackCat
  */

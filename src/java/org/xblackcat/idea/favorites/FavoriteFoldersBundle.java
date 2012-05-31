@@ -23,7 +23,9 @@ class FavoriteFoldersBundle {
 
     private static ResourceBundle getBundle() {
         ResourceBundle bundle = null;
-        if (ourBundle != null) bundle = ourBundle.get();
+        if (ourBundle != null) {
+            bundle = ourBundle.get();
+        }
         if (bundle == null) {
             bundle = ResourceBundle.getBundle(PATH_TO_BUNDLE);
             ourBundle = new SoftReference<ResourceBundle>(bundle);

@@ -7,6 +7,7 @@ import com.intellij.openapi.ui.FixedSizeButton;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
+import org.jdesktop.swingx.combobox.EnumComboBoxModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,15 +22,15 @@ class FavoriteFolderChooser {
     private static final FileChooserDescriptor FAVORITE_FOLDER_DESCRIPTOR = new FileChooserDescriptor(false, true, true, false, true, false);
     private static final FileChooserDescriptor FAVORITE_ICON_DESCRIPTOR = new FileChooserDescriptor(true, false, true, false, true, false);
 
-    private boolean canceled = true;
     private VirtualFile selectedFolder = null;
 
     private IIconGetter icon = FolderIcon.Default;
     private String name;
     private JComponent mainPanel;
     private final JTextField favoriteNameField;
+    private final EnumComboBoxModel<FolderLevel> levelModel = new EnumComboBoxModel<FolderLevel>(FolderLevel.class);
 
-    public FavoriteFolderChooser(FavoriteFolder initFolder) {
+    public FavoriteFolderChooser(FavoriteFolder initFolder, boolean showLevelBox) {
         if (initFolder != null) {
             selectedFolder = initFolder.getFile();
             icon = initFolder.getIcon();
@@ -65,6 +66,10 @@ class FavoriteFolderChooser {
         labelsPane.add(new JLabel(FavoriteFoldersBundle.message("FavoriteFolder.AddDialog.SelectFolderName.label")));
         labelsPane.add(new JLabel(FavoriteFoldersBundle.message("FavoriteFolder.AddDialog.SelectFolder.label")));
         labelsPane.add(new JLabel(FavoriteFoldersBundle.message("FavoriteFolder.AddDialog.SelectIcon.label")));
+
+        if (showLevelBox) {
+            labelsPane.add(new JLabel(FavoriteFoldersBundle.message("FavoriteFolder.AddDialog.SelectFolderLevel.label")));
+        }
 
         JPanel fieldsPane = new JPanel(new GridLayout(0, 1, 5, 5));
 
@@ -140,6 +145,13 @@ class FavoriteFolderChooser {
         selectIconPane.add(iconSelector, BorderLayout.CENTER);
         selectIconPane.add(browseIconButton, BorderLayout.EAST);
         fieldsPane.add(selectIconPane);
+
+        if (showLevelBox) {
+            JPanel cover = new JPanel(new BorderLayout());
+            cover.add(new JComboBox(levelModel), BorderLayout.WEST);
+            levelModel.setSelectedItem(FolderLevel.Global);
+            fieldsPane.add(cover);
+        }
     }
 
     public JComponent getMainPanel() {
@@ -152,5 +164,9 @@ class FavoriteFolderChooser {
 
     public JComponent getFileLine() {
         return favoriteNameField;
+    }
+
+    public FolderLevel getTargetLevel() {
+        return levelModel.getSelectedItem();
     }
 }

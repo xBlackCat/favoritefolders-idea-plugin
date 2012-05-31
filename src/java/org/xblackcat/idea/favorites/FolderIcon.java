@@ -40,8 +40,7 @@ enum FolderIcon implements IIconGetter {
     Libraries(IconLoader.getIcon("/nodes/ppLibClosed.png")),
     Resources(IconLoader.getIcon("/nodes/resourceBundleClosed.png")),
     Unknown(IconLoader.getIcon("/nodes/unknownJdkClosed.png")),
-    Web(IconLoader.getIcon("/nodes/webFolderClosed.png")),
-    ;
+    Web(IconLoader.getIcon("/nodes/webFolderClosed.png")),;
 
     private final Icon icon;
 
