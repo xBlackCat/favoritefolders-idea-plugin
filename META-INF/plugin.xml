@@ -13,9 +13,9 @@
 <li><b>v1.0.1.0</b> - 'Add folder to favorites' action has been introduced</li>
         </ul>]]>
     </change-notes>
-    <version>1.0.1.0</version>
+    <version>1.0.1.5</version>
     <vendor email="xblackcat@gmail.com" url="http://code.google.com/p/favoritefolders-idea-plugin/">xBlackCat</vendor>
-    <idea-version since-build="103.1"/>
+    <idea-version since-build="123.1"/>
     <depends>com.intellij.modules.lang</depends>
 
     <application-components>
