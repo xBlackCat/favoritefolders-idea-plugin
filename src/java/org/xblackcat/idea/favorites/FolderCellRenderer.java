@@ -1,8 +1,7 @@
 package org.xblackcat.idea.favorites;
 
 import com.intellij.openapi.vfs.VirtualFile;
-
-import java.awt.*;
+import com.intellij.ui.JBColor;
 
 /**
  * @author xBlackCat
@@ -19,8 +18,8 @@ class FolderCellRenderer extends ACellRenderer {
             }
         } else {
             setText(ff.getUrl());
-            setForeground(Color.white);
-            setBackground(Color.red);
+            setForeground(JBColor.WHITE);
+            setBackground(JBColor.RED);
         }
 
         setToolTipText(getText());

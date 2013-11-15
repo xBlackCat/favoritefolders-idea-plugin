@@ -20,14 +20,14 @@ import java.util.List;
  * @author xBlackCat
  */
 abstract class AFavoritesContainer implements BaseComponent, PersistentStateComponent<Element> {
-    protected List<FavoriteFolder> favorites = new ArrayList<FavoriteFolder>();
+    protected List<FavoriteFolder> favorites = new ArrayList<>();
 
     List<FavoriteFolder> getFavorites() {
         return favorites;
     }
 
     void setFavorites(List<FavoriteFolder> favorites) {
-        this.favorites = new ArrayList<FavoriteFolder>(favorites.size());
+        this.favorites = new ArrayList<>(favorites.size());
 
         this.favorites.addAll(favorites);
 
@@ -56,11 +56,11 @@ abstract class AFavoritesContainer implements BaseComponent, PersistentStateComp
     @SuppressWarnings({"unchecked"})
     @Override
     public void loadState(Element foldersConfig) {
-        favorites = new ArrayList<FavoriteFolder>();
+        favorites = new ArrayList<>();
         boolean showNoIcon = false;
         boolean showNoFolder = false;
 
-        for (Element e : (List<Element>) foldersConfig.getChildren("folder")) {
+        for (Element e : foldersConfig.getChildren("folder")) {
             String url = e.getAttributeValue("url");
 
             if (StringUtils.isBlank(url)) {

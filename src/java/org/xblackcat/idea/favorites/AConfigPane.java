@@ -4,6 +4,7 @@ import com.intellij.ide.ui.UISettings;
 import com.intellij.openapi.options.BaseConfigurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
+import com.intellij.openapi.project.Project;
 import com.intellij.ui.AddEditRemovePanel;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
@@ -18,7 +19,12 @@ import java.util.List;
  * @author xBlackCat
  */
 abstract class AConfigPane extends BaseConfigurable implements SearchableConfigurable {
+    protected final Project project;
     private FavoriteFoldersConfigForm configForm;
+
+    AConfigPane(Project project) {
+        this.project = project;
+    }
 
     @Nls
     @Override
@@ -68,7 +74,7 @@ abstract class AConfigPane extends BaseConfigurable implements SearchableConfigu
     }
 
     private class FavoriteFoldersConfigForm extends JPanel {
-        private final List<FavoriteFolder> favoriteList = new ArrayList<FavoriteFolder>();
+        private final List<FavoriteFolder> favoriteList = new ArrayList<>();
         private final FavoritesTableModel model = new FavoritesTableModel();
         private final AFavoritesContainer plugin;
         private final AddEditRemovePanel<FavoriteFolder> favoritesPanel;
@@ -91,7 +97,7 @@ abstract class AConfigPane extends BaseConfigurable implements SearchableConfigu
 
                 @Override
                 protected FavoriteFolder editItem(@Nullable FavoriteFolder o) {
-                    FavoriteFolderChooser dialog = Utils.selectFolder(o, favoritesPanel, false);
+                    FavoriteFolderChooser dialog = Utils.selectFolder(o, favoritesPanel, project);
                     if (dialog == null) {
                         return null;
                     }

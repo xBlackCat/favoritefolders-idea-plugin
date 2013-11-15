@@ -124,11 +124,11 @@ final class Utils {
         return id;
     }
 
-    static FavoriteFolderChooser selectFolder(FavoriteFolder folder, Component parent, boolean showLevelBox) {
-        FavoriteFolderChooser dialog = new FavoriteFolderChooser(folder, showLevelBox);
+    static FavoriteFolderChooser selectFolder(FavoriteFolder folder, Component parent, Project project) {
+        FavoriteFolderChooser dialog = new FavoriteFolderChooser(folder, project);
 
         final DialogBuilder builder = new DialogBuilder(parent);
-        builder.setPreferedFocusComponent(dialog.getFileLine());
+        builder.setPreferredFocusComponent(dialog.getFileLine());
         builder.setCenterPanel(dialog.getMainPanel());
         builder.setTitle(FavoriteFoldersBundle.message("FavoriteFolder.AddDialog.title"));
         builder.showModal(true);

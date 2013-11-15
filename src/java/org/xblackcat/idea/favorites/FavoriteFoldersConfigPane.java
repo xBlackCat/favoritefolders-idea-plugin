@@ -8,6 +8,9 @@ import org.jetbrains.annotations.NotNull;
  */
 
 class FavoriteFoldersConfigPane extends AConfigPane {
+    FavoriteFoldersConfigPane() {
+        super(null);
+    }
 
     @Override
     protected AFavoritesContainer getFavoritesContainer() {

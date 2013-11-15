@@ -8,10 +8,8 @@ import org.jetbrains.annotations.NotNull;
  * @author xBlackCat
  */
 class ProjectFavoriteFoldersConfigPane extends AConfigPane {
-    private final Project project;
-
     public ProjectFavoriteFoldersConfigPane(Project project) {
-        this.project = project;
+        super(project);
     }
 
     @Override

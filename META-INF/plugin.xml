@@ -11,11 +11,12 @@
 <li><b>v1.0.0.1</b> - Fix NPE if custom icon is not found. Show warning in this case.</li>
 <li><b>v1.0.0.2</b> - Fix NPE at new project opening in Idea 11 (Nika)</li>
 <li><b>v1.0.1.0</b> - 'Add folder to favorites' action has been introduced</li>
+<li><b>v1.1.0.0</b> - Fix Idea 13 compatibility issues</li>
         </ul>]]>
     </change-notes>
-    <version>1.0.1.5</version>
+    <version>1.1.0.0</version>
     <vendor email="xblackcat@gmail.com" url="http://code.google.com/p/favoritefolders-idea-plugin/">xBlackCat</vendor>
-    <idea-version since-build="123.1"/>
+    <idea-version since-build="123.72"/>
     <depends>com.intellij.modules.lang</depends>
 
     <application-components>
@@ -27,6 +28,7 @@
 
     <project-components>
         <component>
+            <loadForDefaultProject>true</loadForDefaultProject>
             <implementation-class>org.xblackcat.idea.favorites.ProjectFavoriteFoldersPlugin</implementation-class>
         </component>
     </project-components>

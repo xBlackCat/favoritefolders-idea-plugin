@@ -34,11 +34,13 @@ class GoToFavoriteFolder extends FileChooserAction {
         final VirtualFile path = getFavoriteFolder();
 
         LOG.assertTrue(path != null);
-        fileSystemTree.select(path, new Runnable() {
+        fileSystemTree.select(
+                path, new Runnable() {
             public void run() {
                 fileSystemTree.expand(path, null);
             }
-        });
+        }
+        );
     }
 
     protected void update(FileSystemTree fileSystemTree, AnActionEvent e) {

@@ -13,6 +13,7 @@ import java.io.IOException;
  * @author xBlackCat
  */
 
+@SuppressWarnings("UnusedDeclaration")
 enum FolderIcon implements IIconGetter {
     Default(IconLoader.getIcon("/nodes/folder.png")),
     Custom(IconLoader.getIcon("/nodes/newFolder.png")),
@@ -150,7 +151,7 @@ enum FolderIcon implements IIconGetter {
         int height = icon.getIconHeight();
         int width = icon.getIconWidth();
         if (height > 16 || width > 16) {
-            BufferedImage im = UIUtil.createImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+            BufferedImage im = UIUtil.createImage(16, 16, BufferedImage.TYPE_4BYTE_ABGR);
 
             if (height == width) {
                 im.getGraphics().drawImage(icon.getImage(), 0, 0, 16, 16, null);

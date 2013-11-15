@@ -1,7 +1,8 @@
 package org.xblackcat.idea.favorites;
 
+import com.intellij.ui.JBColor;
+
 import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.*;
 
 /**
  * @author xBlackCat
@@ -12,11 +13,11 @@ public abstract class ACellRenderer extends DefaultTableCellRenderer {
         FavoriteFolder ff = (FavoriteFolder) value;
 
         if (ff.isIconValid()) {
-            setForeground(Color.black);
-            setBackground(Color.white);
+            setForeground(JBColor.BLACK);
+            setBackground(JBColor.WHITE);
         } else {
-            setForeground(Color.red);
-            setBackground(Color.white);
+            setForeground(JBColor.RED);
+            setBackground(JBColor.WHITE);
         }
 
         setValue(ff);

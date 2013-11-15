@@ -1,6 +1,6 @@
 package org.xblackcat.idea.favorites;
 
-import java.awt.*;
+import com.intellij.ui.JBColor;
 
 /**
  * @author xBlackCat
@@ -20,7 +20,7 @@ class IconCellRenderer extends ACellRenderer {
         setToolTipText(icon.getName());
 
         if (!ff.isIconValid()) {
-            setBackground(Color.RED);
+            setBackground(JBColor.RED);
         }
     }
 }
