@@ -84,8 +84,8 @@ abstract class AFavoritesContainer implements BaseComponent, PersistentStateComp
     }
 
     private void showNotify(boolean showNoFolder) {
-        String titleKey = showNoFolder ? "FavoriteFolder.WarningTip.nofolder.title" : "FavoriteFolder.WarningTip.noicon.title";
-        String tipKey = showNoFolder ? "FavoriteFolder.WarningTip.nofolder" : "FavoriteFolder.WarningTip.noicon";
+        String titleKey = showNoFolder ? "FavoriteFolder.WarningTip.noFolder.title" : "FavoriteFolder.WarningTip.noIcon.title";
+        String tipKey = showNoFolder ? "FavoriteFolder.WarningTip.noFolder" : "FavoriteFolder.WarningTip.noIcon";
 
         // Icon wasn't found - notify user.
         final Notification notification = new Notification(
