@@ -1,8 +1,10 @@
 package org.xblackcat.idea.favorites;
 
+import com.intellij.ide.plugins.PluginManager;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.application.Application;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.extensions.PluginId;
 import com.intellij.openapi.keymap.Keymap;
 import com.intellij.openapi.keymap.KeymapManager;
 import com.intellij.openapi.project.Project;
@@ -21,6 +23,7 @@ import java.util.List;
 final class Utils {
     @NonNls
     private static final String ACTION_PREFIX = "FavoriteFolder.Favorite_";
+    private static final PluginId PLUGIN_ID = PluginManager.getPluginByClassName(FavoriteFoldersPlugin.class.getName());
 
     private Utils() {
     }
@@ -109,7 +112,7 @@ final class Utils {
             }
 
             GoToFavoriteFolder a = new GoToFavoriteFolder(fi);
-            am.registerAction(ACTION_PREFIX + id, a);
+            am.registerAction(ACTION_PREFIX + id, a, PLUGIN_ID);
             addShortCut(id);
 
             group.add(a, constraint);
