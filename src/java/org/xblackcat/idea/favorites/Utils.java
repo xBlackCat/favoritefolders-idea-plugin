@@ -24,6 +24,7 @@ final class Utils {
     @NonNls
     private static final String ACTION_PREFIX = "FavoriteFolder.Favorite_";
     private static final PluginId PLUGIN_ID = PluginManager.getPluginByClassName(FavoriteFoldersPlugin.class.getName());
+    private static final PluginId PROJECT_PLUGIN_ID = PluginManager.getPluginByClassName(ProjectFavoriteFoldersPlugin.class.getName());
 
     private Utils() {
     }
@@ -36,7 +37,7 @@ final class Utils {
     static void updateFavorites(AFavoritesContainer component, boolean skipProjectFavorites) {
         removeFavorites();
 
-        int nextIndex = registerFavorites(component.getFavorites(), 1);
+        int nextIndex = registerFavorites(component.getFavorites(), 1, PLUGIN_ID);
 
         if (skipProjectFavorites) {
             return;
@@ -47,14 +48,14 @@ final class Utils {
         if (openProjects.length > 0) {
             for (Project p : openProjects) {
                 List<FavoriteFolder> favorites = p.getComponent(ProjectFavoriteFoldersPlugin.class).getFavorites();
-                nextIndex = registerFavorites(favorites, nextIndex);
+                nextIndex = registerFavorites(favorites, nextIndex, PROJECT_PLUGIN_ID);
             }
         } else {
             Project defaultProject = projectManager.getDefaultProject();
             ProjectFavoriteFoldersPlugin defaultProjectComponent = defaultProject.getComponent(ProjectFavoriteFoldersPlugin.class);
             if (defaultProjectComponent != null) {
                 List<FavoriteFolder> favorites = defaultProjectComponent.getFavorites();
-                registerFavorites(favorites, nextIndex);
+                registerFavorites(favorites, nextIndex, PROJECT_PLUGIN_ID);
             }
         }
     }
@@ -99,7 +100,7 @@ final class Utils {
         }
     }
 
-    private static int registerFavorites(List<FavoriteFolder> favorites, int startIndex) {
+    private static int registerFavorites(List<FavoriteFolder> favorites, int startIndex, PluginId pluginId) {
         ActionManager am = ActionManager.getInstance();
 
         DefaultActionGroup group = (DefaultActionGroup) am.getAction("FileChooserToolbar");
@@ -112,7 +113,7 @@ final class Utils {
             }
 
             GoToFavoriteFolder a = new GoToFavoriteFolder(fi);
-            am.registerAction(ACTION_PREFIX + id, a, PLUGIN_ID);
+            am.registerAction(ACTION_PREFIX + id, a, pluginId);
             addShortCut(id);
 
             group.add(a, constraint);
