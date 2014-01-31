@@ -50,13 +50,6 @@ final class Utils {
                 List<FavoriteFolder> favorites = p.getComponent(ProjectFavoriteFoldersPlugin.class).getFavorites();
                 nextIndex = registerFavorites(favorites, nextIndex, PROJECT_PLUGIN_ID);
             }
-        } else {
-            Project defaultProject = projectManager.getDefaultProject();
-            ProjectFavoriteFoldersPlugin defaultProjectComponent = defaultProject.getComponent(ProjectFavoriteFoldersPlugin.class);
-            if (defaultProjectComponent != null) {
-                List<FavoriteFolder> favorites = defaultProjectComponent.getFavorites();
-                registerFavorites(favorites, nextIndex, PROJECT_PLUGIN_ID);
-            }
         }
     }
 

@@ -13,12 +13,13 @@
 <li><b>v1.0.1.0</b> - 'Add folder to favorites' action has been introduced</li>
 <li><b>v1.1.0.0</b> - Fix Idea 13 compatibility issues</li>
 <li><b>v1.1.0.1</b> - Show registered actions in the FavoriteFolder plugin key map group</li>
+<li><b>v1.1.1.0</b> - Fix platform dependencies. Exceptions fix.</li>
         </ul>]]>
     </change-notes>
-    <version>1.1.0.1</version>
+    <version>1.1.1.0</version>
     <vendor email="xblackcat@gmail.com" url="http://code.google.com/p/favoritefolders-idea-plugin/">xBlackCat</vendor>
     <idea-version since-build="123.72"/>
-    <depends>com.intellij.modules.all</depends>
+    <depends>com.intellij.modules.platform</depends>
 
     <application-components>
         <!-- Add your application components here -->
