@@ -1,0 +1,1 @@
+Adds additional "Go to folder" actions into FileChooser dialog of IntelliJ Idea, PhpStorm and etc. products.
