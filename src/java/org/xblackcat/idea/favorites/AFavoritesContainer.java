@@ -1,7 +1,6 @@
 package org.xblackcat.idea.favorites;
 
 import com.intellij.notification.Notification;
-import com.intellij.notification.NotificationListener;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
 import com.intellij.openapi.components.BaseComponent;
@@ -10,9 +9,7 @@ import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;
 import org.apache.commons.lang.StringUtils;
 import org.jdom.Element;
-import org.jetbrains.annotations.NotNull;
 
-import javax.swing.event.HyperlinkEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,26 +90,22 @@ abstract class AFavoritesContainer implements BaseComponent, PersistentStateComp
                 FavoriteFoldersBundle.message(titleKey),
                 FavoriteFoldersBundle.message(tipKey),
                 NotificationType.WARNING,
-                new NotificationListener() {
-                    @Override
-                    public void hyperlinkUpdate(@NotNull Notification notification, @NotNull HyperlinkEvent event) {
-                        notification.expire();
+                (n, event) -> {
+                    n.expire();
 
-                        AConfigPane configurable = getConfigPane();
-                        ShowSettingsUtil.getInstance().editConfigurable(getProject(), configurable);
+                    AConfigPane configurable = getConfigPane();
+                    ShowSettingsUtil.getInstance().editConfigurable(getProject(), configurable);
 
-                        // Check again
-                        for (FavoriteFolder ff : favorites) {
-                            if (!ff.isIconValid()) {
-                                showNotify(false);
-                                return;
-                            } else if (!ff.isFileValid()) {
-                                showNotify(true);
-                                return;
-                            }
+                    // Check again
+                    for (FavoriteFolder ff : favorites) {
+                        if (!ff.isIconValid()) {
+                            showNotify(false);
+                            return;
+                        } else if (!ff.isFileValid()) {
+                            showNotify(true);
+                            return;
                         }
                     }
-
                 }
         );
 

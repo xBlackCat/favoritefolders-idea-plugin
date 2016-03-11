@@ -6,7 +6,6 @@ import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import com.intellij.openapi.project.Project;
 import com.intellij.ui.AddEditRemovePanel;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -24,12 +23,6 @@ abstract class AConfigPane extends BaseConfigurable implements SearchableConfigu
 
     AConfigPane(Project project) {
         this.project = project;
-    }
-
-    @Nls
-    @Override
-    public String getDisplayName() {
-        return "Favorite Folders";
     }
 
     @Override
@@ -79,7 +72,7 @@ abstract class AConfigPane extends BaseConfigurable implements SearchableConfigu
         private final AFavoritesContainer plugin;
         private final AddEditRemovePanel<FavoriteFolder> favoritesPanel;
 
-        public FavoriteFoldersConfigForm(AFavoritesContainer plugin) {
+        private FavoriteFoldersConfigForm(AFavoritesContainer plugin) {
             super(new BorderLayout());
             this.plugin = plugin;
 

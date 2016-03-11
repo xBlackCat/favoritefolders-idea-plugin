@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 /**
  * @author xBlackCat
  */
-public abstract class ACellRenderer extends DefaultTableCellRenderer {
+abstract class ACellRenderer extends DefaultTableCellRenderer {
     @Override
     protected void setValue(Object value) {
         FavoriteFolder ff = (FavoriteFolder) value;

@@ -13,8 +13,6 @@ import org.jdesktop.swingx.combobox.EnumComboBoxModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /**
@@ -55,17 +53,7 @@ class FavoriteFolderChooser {
         filePathField.setEditable(false);
         FixedSizeButton browseDirectoryButton = new FixedSizeButton(iconSelector);
         TextFieldWithBrowseButton.MyDoClickAction.addTo(browseDirectoryButton, filePathField);
-        browseDirectoryButton.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        VirtualFile[] files = FileChooser.chooseFiles(FAVORITE_FOLDER_DESCRIPTOR, mainPanel, project, selectedFolder);
-                        if (files.length != 0) {
-                            selectedFolder = files[0];
-                            filePathField.setText(selectedFolder.getPresentableUrl());
-                        }
-                    }
-                }
-        );
+        browseDirectoryButton.addActionListener(e -> onDirectoryBrowseClick(project, filePathField));
 
 
         JPanel labelsPane = new JPanel(new GridLayout(0, 1, 5, 5));
@@ -106,61 +94,10 @@ class FavoriteFolderChooser {
                     }
                 }
         );
-        iconSelector.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        IIconGetter newIcon = (IIconGetter) iconSelector.getSelectedItem();
-
-                        if (newIcon == FolderIcon.Custom) {
-                            newIcon = null;
-
-                            VirtualFile s;
-                            if (icon.isCustom()) {
-                                s = VirtualFileManager.getInstance().findFileByUrl(icon.getName());
-                            } else {
-                                s = null;
-                            }
-
-                            iconSelector.hidePopup();
-                            VirtualFile[] files = FileChooser.chooseFiles(FAVORITE_ICON_DESCRIPTOR, mainPanel, project, s);
-                            if (files.length == 0) {
-                                iconSelector.getModel().setSelectedItem(icon);
-                                return;
-                            }
-
-                            try {
-                                newIcon = FolderIcon.loadIcon(files[0].getUrl());
-                            } catch (IOException e1) {
-                                // Fall through: if icon can not be loaded - show error lately
-                            }
-
-                            if (newIcon == null) {
-                                // Show error
-                                JOptionPane.showMessageDialog(
-                                        mainPanel,
-                                        FavoriteFoldersBundle.message("FavoriteFolder.ErrorDialog.invalidImage")
-                                );
-                                iconSelector.getModel().setSelectedItem(icon);
-                                return;
-                            }
-                        }
-
-                        icon = newIcon;
-                        iconSelector.getModel().setSelectedItem(icon);
-                    }
-                }
-        );
+        iconSelector.addActionListener(e -> onIconSelected(project, iconSelector));
 
         FixedSizeButton browseIconButton = new FixedSizeButton(iconSelector);
-        browseIconButton.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        iconSelector.setSelectedItem(FolderIcon.Custom);
-                    }
-                }
-        );
+        browseIconButton.addActionListener(e -> iconSelector.setSelectedItem(FolderIcon.Custom));
 
         JPanel selectIconPane = new JPanel(new BorderLayout(5, 5));
         selectIconPane.add(iconSelector, BorderLayout.CENTER);
@@ -173,6 +110,55 @@ class FavoriteFolderChooser {
             levelModel.setSelectedItem(FolderLevel.Global);
             fieldsPane.add(cover);
         }
+    }
+
+    private void onDirectoryBrowseClick(Project project, JTextField filePathField) {
+        VirtualFile[] files = FileChooser.chooseFiles(FAVORITE_FOLDER_DESCRIPTOR, mainPanel, project, selectedFolder);
+        if (files.length != 0) {
+            selectedFolder = files[0];
+            filePathField.setText(selectedFolder.getPresentableUrl());
+        }
+    }
+
+    private void onIconSelected(Project project, ComboBox iconSelector) {
+        IIconGetter newIcon = (IIconGetter) iconSelector.getSelectedItem();
+
+        if (newIcon == FolderIcon.Custom) {
+            newIcon = null;
+
+            VirtualFile s;
+            if (icon.isCustom()) {
+                s = VirtualFileManager.getInstance().findFileByUrl(icon.getName());
+            } else {
+                s = null;
+            }
+
+            iconSelector.hidePopup();
+            VirtualFile[] files = FileChooser.chooseFiles(FAVORITE_ICON_DESCRIPTOR, mainPanel, project, s);
+            if (files.length == 0) {
+                iconSelector.getModel().setSelectedItem(icon);
+                return;
+            }
+
+            try {
+                newIcon = FolderIcon.loadIcon(files[0].getUrl());
+            } catch (IOException e1) {
+                // Fall through: if icon can not be loaded - show error lately
+            }
+
+            if (newIcon == null) {
+                // Show error
+                JOptionPane.showMessageDialog(
+                        mainPanel,
+                        FavoriteFoldersBundle.message("FavoriteFolder.ErrorDialog.invalidImage")
+                );
+                iconSelector.getModel().setSelectedItem(icon);
+                return;
+            }
+        }
+
+        icon = newIcon;
+        iconSelector.getModel().setSelectedItem(icon);
     }
 
     public JComponent getMainPanel() {

@@ -1,6 +1,7 @@
 package org.xblackcat.idea.favorites;
 
 import com.intellij.openapi.components.ServiceManager;
+import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -21,5 +22,11 @@ class FavoriteFoldersConfigPane extends AConfigPane {
     @Override
     public String getId() {
         return "favoritefolders";
+    }
+
+    @Nls
+    @Override
+    public String getDisplayName() {
+        return FavoriteFoldersBundle.message("FavoriteFolder.Config.title.global");
     }
 }

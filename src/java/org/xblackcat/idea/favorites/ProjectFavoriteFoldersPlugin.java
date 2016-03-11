@@ -15,7 +15,6 @@ import org.jetbrains.annotations.NotNull;
         name = "ProjectFavoriteFolders",
         storages = {
                 @Storage(
-                        id = "default",
                         file = "$PROJECT_FILE$"
                 ),
                 @Storage(

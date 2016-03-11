@@ -20,7 +20,7 @@ enum FolderIcon implements IIconGetter {
     AbstractClass(IconLoader.getIcon("/nodes/abstractClass.png")),
     AbstractException(IconLoader.getIcon("/nodes/abstractException.png")),
     AbstractMethod(IconLoader.getIcon("/nodes/abstractMethod.png")),
-    Annotationtype(IconLoader.getIcon("/nodes/annotationtype.png")),
+    AnnotationType(IconLoader.getIcon("/nodes/annotationtype.png")),
     AnonymousClass(IconLoader.getIcon("/nodes/anonymousClass.png")),
     Artifact(IconLoader.getIcon("/nodes/artifact.png")),
     C_plocal(IconLoader.getIcon("/nodes/c_plocal.png")),
@@ -81,8 +81,8 @@ enum FolderIcon implements IIconGetter {
     Padlock(IconLoader.getIcon("/nodes/padlock.png")),
     Parameter(IconLoader.getIcon("/nodes/parameter.png")),
     Plugin(IconLoader.getIcon("/nodes/plugin.png")),
-    Pluginnotinstalled(IconLoader.getIcon("/nodes/pluginnotinstalled.png")),
-    Pluginobsolete(IconLoader.getIcon("/nodes/pluginobsolete.png")),
+    PluginNotInstalled(IconLoader.getIcon("/nodes/pluginnotinstalled.png")),
+    PluginObsolete(IconLoader.getIcon("/nodes/pluginobsolete.png")),
     Pointcut(IconLoader.getIcon("/nodes/pointcut.png")),
     PpFile(IconLoader.getIcon("/nodes/ppFile.png")),
     PpInvalid(IconLoader.getIcon("/nodes/ppInvalid.png")),
@@ -115,7 +115,7 @@ enum FolderIcon implements IIconGetter {
     Variable(IconLoader.getIcon("/nodes/variable.png")),
     WarningIntroduction(IconLoader.getIcon("/nodes/warningIntroduction.png")),
     WebFolder(IconLoader.getIcon("/nodes/webFolder.png")),
-    Weblistener(IconLoader.getIcon("/nodes/weblistener.png")),
+    WebListener(IconLoader.getIcon("/nodes/weblistener.png")),
     WriteAccess(IconLoader.getIcon("/nodes/write-access.png"));
 
     private final Icon icon;

@@ -2,13 +2,14 @@ package org.xblackcat.idea.favorites;
 
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
+import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * @author xBlackCat
  */
 class ProjectFavoriteFoldersConfigPane extends AConfigPane {
-    public ProjectFavoriteFoldersConfigPane(Project project) {
+    ProjectFavoriteFoldersConfigPane(Project project) {
         super(project);
     }
 
@@ -21,5 +22,11 @@ class ProjectFavoriteFoldersConfigPane extends AConfigPane {
     @Override
     public String getId() {
         return "projectfavoritefolders";
+    }
+
+    @Nls
+    @Override
+    public String getDisplayName() {
+        return FavoriteFoldersBundle.message("FavoriteFolder.Config.title.project");
     }
 }
