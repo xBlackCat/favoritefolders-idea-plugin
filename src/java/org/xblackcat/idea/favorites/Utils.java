@@ -13,7 +13,6 @@ import com.intellij.openapi.ui.DialogBuilder;
 import org.jetbrains.annotations.NonNls;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
@@ -121,10 +120,10 @@ final class Utils {
         return id;
     }
 
-    static FavoriteFolderChooser selectFolder(FavoriteFolder folder, Component parent, Project project) {
+    static FavoriteFolderChooser selectFolder(FavoriteFolder folder, Project project) {
         FavoriteFolderChooser dialog = new FavoriteFolderChooser(folder, project);
 
-        final DialogBuilder builder = new DialogBuilder(parent);
+        final DialogBuilder builder = new DialogBuilder(project);
         builder.setPreferredFocusComponent(dialog.getFileLine());
         builder.setCenterPanel(dialog.getMainPanel());
         builder.setTitle(FavoriteFoldersBundle.message("FavoriteFolder.AddDialog.title"));

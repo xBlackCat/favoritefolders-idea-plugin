@@ -28,7 +28,7 @@ class AddFavoriteFolder extends FileChooserAction {
                 FolderIcon.Default
         );
 
-        FavoriteFolderChooser chooser = Utils.selectFolder(template, e.getInputEvent().getComponent(), e.getProject());
+        FavoriteFolderChooser chooser = Utils.selectFolder(template, e.getProject());
 
         if (chooser == null) {
             return;

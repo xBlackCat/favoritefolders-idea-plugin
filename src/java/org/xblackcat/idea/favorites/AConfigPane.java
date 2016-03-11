@@ -90,7 +90,7 @@ abstract class AConfigPane extends BaseConfigurable implements SearchableConfigu
 
                 @Override
                 protected FavoriteFolder editItem(@Nullable FavoriteFolder o) {
-                    FavoriteFolderChooser dialog = Utils.selectFolder(o, favoritesPanel, project);
+                    FavoriteFolderChooser dialog = Utils.selectFolder(o, project);
                     if (dialog == null) {
                         return null;
                     }
