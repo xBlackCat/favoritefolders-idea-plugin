@@ -15,7 +15,7 @@
 <li><b>v1.1.0.1</b> - Show registered actions in the FavoriteFolder plugin key map group</li>
 <li><b>v1.1.1.0</b> - Fix platform dependencies. Exceptions fix.</li>
 <li><b>v1.2.0.0</b> - Migrate to Idea 2016 platform and Java 8. Fix labels in config pane.</li>
-<li><b>v1.2.0.1</b> - Remove deleted standard icons from list</li>
+<li><b>v1.2.0.1</b> - Fix exception at loading plugin in 2016.2 EAP</li>
         </ul>]]>
     </change-notes>
     <version>1.2.0.1</version>
