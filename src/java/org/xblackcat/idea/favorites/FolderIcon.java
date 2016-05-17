@@ -59,7 +59,6 @@ enum FolderIcon implements IIconGetter {
     HomeFolder(IconLoader.getIcon("/nodes/homeFolder.png")),
     IdeaModule(IconLoader.getIcon("/nodes/ideaModule.png")),
     IdeaProject(IconLoader.getIcon("/nodes/ideaProject.png")),
-    IdeaWorkspace(IconLoader.getIcon("/nodes/ideaWorkspace.png")),
     InspectionResults(IconLoader.getIcon("/nodes/inspectionResults.png")),
     Interface(IconLoader.getIcon("/nodes/interface.png")),
     JarDirectory(IconLoader.getIcon("/nodes/jarDirectory.png")),
