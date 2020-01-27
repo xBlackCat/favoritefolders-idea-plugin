@@ -1,4 +1,4 @@
-<idea-plugin version="2">
+<idea-plugin>
     <name>FavoriteFolders</name>
     <description>Adds favorite folders into FileChooser dialog toolbar.</description>
     <change-notes><![CDATA[<ul>
@@ -16,39 +16,30 @@
 <li><b>v1.1.1.0</b> - Fix platform dependencies. Exceptions fix.</li>
 <li><b>v1.2.0.0</b> - Migrate to Idea 2016 platform and Java 8. Fix labels in config pane.</li>
 <li><b>v1.2.0.1</b> - Fix exception at loading plugin in 2016.2 EAP</li>
+<li><b>v1.3</b> - Code review: do not use deprecated features. Prepare for Idea 2020.x</li>
         </ul>]]>
     </change-notes>
-    <version>1.2.0.1</version>
+    <version>1.3</version>
     <vendor email="xblackcat@gmail.com" url="http://code.google.com/p/favoritefolders-idea-plugin/">xBlackCat</vendor>
-    <idea-version since-build="145.1"/>
+    <idea-version since-build="193.1"/>
     <depends>com.intellij.modules.platform</depends>
 
-    <application-components>
-        <!-- Add your application components here -->
-        <component>
-            <implementation-class>org.xblackcat.idea.favorites.FavoriteFoldersPlugin</implementation-class>
-        </component>
-    </application-components>
-
-    <project-components>
-        <component>
-            <loadForDefaultProject>true</loadForDefaultProject>
-            <implementation-class>org.xblackcat.idea.favorites.ProjectFavoriteFoldersPlugin</implementation-class>
-        </component>
-    </project-components>
-
     <extensions defaultExtensionNs="com.intellij">
-        <applicationConfigurable instance="org.xblackcat.idea.favorites.FavoriteFoldersConfigPane"
-                                 id="favoritefolders"/>
-        <projectConfigurable instance="org.xblackcat.idea.favorites.ProjectFavoriteFoldersConfigPane"
-                             id="projectfavoritefolders"/>
+        <applicationService serviceImplementation="org.xblackcat.idea.favorites.FavoriteFoldersPlugin"/>
+        <projectService serviceImplementation="org.xblackcat.idea.favorites.ProjectFavoriteFoldersPlugin"/>
+        <applicationConfigurable bundle="messages.FavoriteFoldersBundle" key="FavoriteFolder.Config.title"
+                                 id="favoritefolders" groupId="tools" instance="org.xblackcat.idea.favorites.FavoriteFoldersConfigPane"/>
+        <projectConfigurable instance="org.xblackcat.idea.favorites.ProjectFavoriteFoldersConfigPane" parentId="favoritefolders"
+                             id="favoritefolders_project"/>
+
+        <applicationInitializedListener implementation="org.xblackcat.idea.favorites.AppInitializerListener"/>
     </extensions>
 
     <actions>
         <action id="FavoriteFolder.AddFavorite"
                 class="org.xblackcat.idea.favorites.AddFavoriteFolder"
-                text="Add to favorites"
-                icon="/general/addFavoritesList.png">
+                text="Add to Favorites"
+                icon="/general/add.svg">
             <keyboard-shortcut first-keystroke="ctrl shift F" keymap="$default"/>
             <add-to-group group-id="FileChooserToolbar" anchor="last"/>
         </action>

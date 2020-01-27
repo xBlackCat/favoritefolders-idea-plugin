@@ -8,8 +8,9 @@ import com.intellij.openapi.ui.FixedSizeButton;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
-import com.intellij.ui.ListCellRendererWrapper;
-import org.jdesktop.swingx.combobox.EnumComboBoxModel;
+import com.intellij.ui.EnumComboBoxModel;
+import com.intellij.ui.SimpleListCellRenderer;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,7 +37,7 @@ class FavoriteFolderChooser {
     private final JTextField favoriteNameField;
     private final EnumComboBoxModel<FolderLevel> levelModel = new EnumComboBoxModel<>(FolderLevel.class);
 
-    public FavoriteFolderChooser(FavoriteFolder initFolder, final Project project) {
+    public FavoriteFolderChooser(FavoriteFolder initFolder, final Project project, boolean fromToolbar) {
         if (initFolder != null) {
             selectedFolder = initFolder.getFile();
             icon = initFolder.getIcon();
@@ -47,7 +48,7 @@ class FavoriteFolderChooser {
         mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(centerPane, BorderLayout.NORTH);
 
-        final ComboBox iconSelector = new ComboBox(FolderIcon.values(), 18);
+        final ComboBox<FolderIcon> iconSelector = new ComboBox<>(FolderIcon.values(), 18);
 
         final JTextField filePathField = new JTextField(selectedFolder == null ? null : selectedFolder.getPresentableUrl(), 40);
         filePathField.setEditable(false);
@@ -64,7 +65,7 @@ class FavoriteFolderChooser {
         labelsPane.add(new JLabel(FavoriteFoldersBundle.message("FavoriteFolder.AddDialog.SelectFolder.label")));
         labelsPane.add(new JLabel(FavoriteFoldersBundle.message("FavoriteFolder.AddDialog.SelectIcon.label")));
 
-        if (project != null) {
+        if (fromToolbar && project != null) {
             labelsPane.add(new JLabel(FavoriteFoldersBundle.message("FavoriteFolder.AddDialog.SelectFolderLevel.label")));
         }
 
@@ -86,9 +87,9 @@ class FavoriteFolderChooser {
 
         iconSelector.getModel().setSelectedItem(icon);
         iconSelector.setRenderer(
-                new ListCellRendererWrapper<IIconGetter>() {
+                new SimpleListCellRenderer<IIconGetter>() {
                     @Override
-                    public void customize(JList jList, IIconGetter value, int i, boolean b, boolean b1) {
+                    public void customize(@NotNull JList jList, IIconGetter value, int i, boolean b, boolean b1) {
                         setIcon(value.getIcon());
                         setText(value.isCustom() ? "<Custom>" : value.getName());
                     }
@@ -105,10 +106,14 @@ class FavoriteFolderChooser {
         fieldsPane.add(selectIconPane);
 
         if (project != null) {
-            JPanel cover = new JPanel(new BorderLayout());
-            cover.add(new ComboBox(levelModel), BorderLayout.WEST);
-            levelModel.setSelectedItem(FolderLevel.Global);
-            fieldsPane.add(cover);
+            if (fromToolbar) {
+                JPanel cover = new JPanel(new BorderLayout());
+                cover.add(new ComboBox<>(levelModel), BorderLayout.WEST);
+                levelModel.setSelectedItem(FolderLevel.Global);
+                fieldsPane.add(cover);
+            } else {
+                levelModel.setSelectedItem(FolderLevel.Project);
+            }
         }
     }
 
@@ -120,7 +125,7 @@ class FavoriteFolderChooser {
         }
     }
 
-    private void onIconSelected(Project project, ComboBox iconSelector) {
+    private void onIconSelected(Project project, ComboBox<FolderIcon> iconSelector) {
         IIconGetter newIcon = (IIconGetter) iconSelector.getSelectedItem();
 
         if (newIcon == FolderIcon.Custom) {

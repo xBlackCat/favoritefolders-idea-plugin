@@ -27,7 +27,7 @@ class FavoritesTableModel extends AddEditRemovePanel.TableModel<FavoriteFolder> 
     }
 
     @Override
-    public Class getColumnClass(int columnIndex) {
+    public Class<FavoriteFolder> getColumnClass(int columnIndex) {
         return FavoriteFolder.class;
     }
 

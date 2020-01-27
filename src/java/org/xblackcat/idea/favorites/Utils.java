@@ -10,7 +10,6 @@ import com.intellij.openapi.keymap.KeymapManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.DialogBuilder;
-import org.jetbrains.annotations.NonNls;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -20,39 +19,38 @@ import java.util.List;
  * @author xBlackCat
  */
 final class Utils {
-    @NonNls
     private static final String ACTION_PREFIX = "FavoriteFolder.Favorite_";
+    private static final String PROJECT_ACTION_PREFIX = "FavoriteFolder.Project_Favorite_";
     private static final PluginId PLUGIN_ID = PluginManager.getPluginByClassName(FavoriteFoldersPlugin.class.getName());
     private static final PluginId PROJECT_PLUGIN_ID = PluginManager.getPluginByClassName(ProjectFavoriteFoldersPlugin.class.getName());
 
     private Utils() {
     }
 
-    static void updateFavorites() {
+    static void updateAllFavorites() {
         Application app = ApplicationManager.getApplication();
-        updateFavorites(app.getComponent(FavoriteFoldersPlugin.class), false);
-    }
+        removeFavorites(ACTION_PREFIX);
+        removeFavorites(PROJECT_ACTION_PREFIX);
 
-    static void updateFavorites(AFavoritesContainer component, boolean skipProjectFavorites) {
-        removeFavorites();
-
-        int nextIndex = registerFavorites(component.getFavorites(), 1, PLUGIN_ID);
-
-        if (skipProjectFavorites) {
-            return;
-        }
+        int nextIndex = registerFavorites(ACTION_PREFIX, app.getService(FavoriteFoldersPlugin.class).getFavorites(), 1, PLUGIN_ID);
 
         ProjectManager projectManager = ProjectManager.getInstance();
         Project[] openProjects = projectManager.getOpenProjects();
         if (openProjects.length > 0) {
             for (Project p : openProjects) {
-                List<FavoriteFolder> favorites = p.getComponent(ProjectFavoriteFoldersPlugin.class).getFavorites();
-                nextIndex = registerFavorites(favorites, nextIndex, PROJECT_PLUGIN_ID);
+                List<FavoriteFolder> favorites = p.getService(ProjectFavoriteFoldersPlugin.class).getFavorites();
+                nextIndex = registerFavorites(PROJECT_ACTION_PREFIX, favorites, nextIndex, PROJECT_PLUGIN_ID);
             }
         }
     }
 
-    private static void addShortCut(int id) {
+    static void updateFavorites(FavoriteFoldersPlugin appPlugin) {
+        removeFavorites(ACTION_PREFIX);
+
+        registerFavorites(ACTION_PREFIX, appPlugin.getFavorites(), 1, PLUGIN_ID);
+    }
+
+    private static void addShortCut(String actionPrefix, int id) {
         KeyStroke stroke = null;
         if (id < 7) {
             stroke = KeyStroke.getKeyStroke(id + KeyEvent.VK_3, KeyEvent.CTRL_DOWN_MASK);
@@ -70,19 +68,19 @@ final class Utils {
 
             if (keymap != null) {
                 KeyboardShortcut shortcut = new KeyboardShortcut(stroke, null);
-                keymap.addShortcut(ACTION_PREFIX + id, shortcut);
+                keymap.addShortcut(actionPrefix + id, shortcut);
             }
         }
     }
 
-    private static void removeFavorites() {
+    private static void removeFavorites(String actionPrefix) {
         ActionManager am = ActionManager.getInstance();
         KeymapManager km = KeymapManager.getInstance();
         Keymap keymap = km.getKeymap(KeymapManager.DEFAULT_IDEA_KEYMAP);
 
         DefaultActionGroup group = (DefaultActionGroup) am.getAction("FileChooserToolbar");
 
-        String[] actionIds = am.getActionIds(ACTION_PREFIX);
+        String[] actionIds = am.getActionIds(actionPrefix);
         for (String actionId : actionIds) {
             group.remove(am.getAction(actionId));
             am.unregisterAction(actionId);
@@ -92,7 +90,12 @@ final class Utils {
         }
     }
 
-    private static int registerFavorites(List<FavoriteFolder> favorites, int startIndex, PluginId pluginId) {
+    private static int registerFavorites(
+            String actionPrefix,
+            List<FavoriteFolder> favorites,
+            int startIndex,
+            PluginId pluginId
+    ) {
         ActionManager am = ActionManager.getInstance();
 
         DefaultActionGroup group = (DefaultActionGroup) am.getAction("FileChooserToolbar");
@@ -105,8 +108,8 @@ final class Utils {
             }
 
             GoToFavoriteFolder a = new GoToFavoriteFolder(fi);
-            am.registerAction(ACTION_PREFIX + id, a, pluginId);
-            addShortCut(id);
+            am.registerAction(actionPrefix + id, a, pluginId);
+            addShortCut(actionPrefix, id);
 
             group.add(a, constraint);
 
@@ -120,8 +123,8 @@ final class Utils {
         return id;
     }
 
-    static FavoriteFolderChooser selectFolder(FavoriteFolder folder, Project project) {
-        FavoriteFolderChooser dialog = new FavoriteFolderChooser(folder, project);
+    static FavoriteFolderChooser selectFolder(FavoriteFolder folder, Project project, boolean fromToolbar) {
+        FavoriteFolderChooser dialog = new FavoriteFolderChooser(folder, project, fromToolbar);
 
         final DialogBuilder builder = new DialogBuilder(project);
         builder.setPreferredFocusComponent(dialog.getFileLine());

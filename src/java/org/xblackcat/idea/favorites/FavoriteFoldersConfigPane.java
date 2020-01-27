@@ -21,7 +21,7 @@ class FavoriteFoldersConfigPane extends AConfigPane {
     @NotNull
     @Override
     public String getId() {
-        return "favoritefolders";
+        return "favoritefolders.global";
     }
 
     @Nls

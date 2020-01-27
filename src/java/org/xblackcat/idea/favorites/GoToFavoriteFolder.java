@@ -12,7 +12,6 @@ import org.apache.commons.lang.StringUtils;
  * @author xBlackCat
  */
 
-@SuppressWarnings({"ComponentNotRegistered"})
 class GoToFavoriteFolder extends FileChooserAction {
     private static final Logger LOG = Logger.getInstance("#org.xblackcat.idea.favorites.GoToFavoriteFolder");
 

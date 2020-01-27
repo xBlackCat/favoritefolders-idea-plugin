@@ -2,7 +2,6 @@ package org.xblackcat.idea.favorites;
 
 import com.intellij.ide.ui.UISettings;
 import com.intellij.openapi.options.BaseConfigurable;
-import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import com.intellij.openapi.project.Project;
 import com.intellij.ui.AddEditRemovePanel;
@@ -43,7 +42,7 @@ abstract class AConfigPane extends BaseConfigurable implements SearchableConfigu
     protected abstract AFavoritesContainer getFavoritesContainer();
 
     @Override
-    public void apply() throws ConfigurationException {
+    public void apply() {
         if (configForm != null) {
             configForm.apply();
         }
@@ -90,7 +89,7 @@ abstract class AConfigPane extends BaseConfigurable implements SearchableConfigu
 
                 @Override
                 protected FavoriteFolder editItem(@Nullable FavoriteFolder o) {
-                    FavoriteFolderChooser dialog = Utils.selectFolder(o, project);
+                    FavoriteFolderChooser dialog = Utils.selectFolder(o, project, false);
                     if (dialog == null) {
                         return null;
                     }

@@ -3,7 +3,6 @@ package org.xblackcat.idea.favorites;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
-import com.intellij.openapi.components.BaseComponent;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;
@@ -16,7 +15,7 @@ import java.util.List;
 /**
  * @author xBlackCat
  */
-abstract class AFavoritesContainer implements BaseComponent, PersistentStateComponent<Element> {
+abstract class AFavoritesContainer implements PersistentStateComponent<Element> {
     protected List<FavoriteFolder> favorites = new ArrayList<>();
 
     List<FavoriteFolder> getFavorites() {
@@ -28,7 +27,7 @@ abstract class AFavoritesContainer implements BaseComponent, PersistentStateComp
 
         this.favorites.addAll(favorites);
 
-        updateFavorites(false);
+        Utils.updateAllFavorites();
     }
 
     @Override
@@ -50,13 +49,24 @@ abstract class AFavoritesContainer implements BaseComponent, PersistentStateComp
         return root;
     }
 
-    @SuppressWarnings({"unchecked"})
     @Override
-    public void loadState(Element foldersConfig) {
-        favorites = new ArrayList<>();
+    public void initializeComponent() {
         boolean showNoIcon = false;
         boolean showNoFolder = false;
 
+        for (FavoriteFolder folder : favorites) {
+            showNoIcon |= !folder.isIconValid();
+            showNoFolder |= !folder.isFileValid();
+        }
+
+        if (showNoIcon || showNoFolder) {
+            showNotify(showNoFolder);
+        }
+    }
+
+    @Override
+    public void loadState(Element foldersConfig) {
+        favorites = new ArrayList<>();
         for (Element e : foldersConfig.getChildren("folder")) {
             String url = e.getAttributeValue("url");
 
@@ -68,15 +78,6 @@ abstract class AFavoritesContainer implements BaseComponent, PersistentStateComp
             String name = e.getAttributeValue("name");
             FavoriteFolder folder = new FavoriteFolder(name, url, icon);
             favorites.add(folder);
-
-            showNoIcon |= !folder.isIconValid();
-            showNoFolder |= !folder.isFileValid();
-        }
-
-        updateFavorites(true);
-
-        if (showNoIcon || showNoFolder) {
-            showNotify(showNoFolder);
         }
     }
 
@@ -115,16 +116,6 @@ abstract class AFavoritesContainer implements BaseComponent, PersistentStateComp
 
 
     protected abstract AConfigPane getConfigPane();
-
-    protected abstract void updateFavorites(boolean firstRun);
-
-    public void initComponent() {
-    }
-
-    public void disposeComponent() {
-        favorites.clear();
-        updateFavorites(false);
-    }
 
     public abstract Project getProject();
 }

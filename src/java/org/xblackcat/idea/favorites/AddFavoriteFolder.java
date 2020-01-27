@@ -21,14 +21,13 @@ class AddFavoriteFolder extends FileChooserAction {
         final VirtualFile path = fileSystemTree.getSelectedFile();
 
         LOG.assertTrue(path != null);
-        assert path != null;
         FavoriteFolder template = new FavoriteFolder(
                 path.getName(),
                 path,
                 FolderIcon.Default
         );
 
-        FavoriteFolderChooser chooser = Utils.selectFolder(template, e.getProject());
+        FavoriteFolderChooser chooser = Utils.selectFolder(template, e.getProject(), true);
 
         if (chooser == null) {
             return;
@@ -49,14 +48,13 @@ class AddFavoriteFolder extends FileChooserAction {
             case Project:
                 Project project = e.getProject();
                 LOG.assertTrue(project != null);
-                assert project != null;
 
                 plugin = ServiceManager.getService(project, ProjectFavoriteFoldersPlugin.class);
                 break;
         }
 
         plugin.getFavorites().add(folder);
-        Utils.updateFavorites();
+        Utils.updateAllFavorites();
 
         UISettings.getInstance().fireUISettingsChanged();
     }

@@ -3,7 +3,7 @@ package org.xblackcat.idea.favorites;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
-import com.intellij.util.ui.UIUtil;
+import com.intellij.util.ui.ImageUtil;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;
@@ -15,24 +15,24 @@ import java.io.IOException;
 
 @SuppressWarnings("UnusedDeclaration")
 enum FolderIcon implements IIconGetter {
-    Default(IconLoader.getIcon("/nodes/folder.png")),
+    Default(IconLoader.getIcon("/nodes/folder.svg")),
     Custom(IconLoader.getIcon("/nodes/newFolder.png")),
-    AbstractClass(IconLoader.getIcon("/nodes/abstractClass.png")),
-    AbstractException(IconLoader.getIcon("/nodes/abstractException.png")),
-    AbstractMethod(IconLoader.getIcon("/nodes/abstractMethod.png")),
-    AnnotationType(IconLoader.getIcon("/nodes/annotationtype.png")),
-    AnonymousClass(IconLoader.getIcon("/nodes/anonymousClass.png")),
-    Artifact(IconLoader.getIcon("/nodes/artifact.png")),
-    C_plocal(IconLoader.getIcon("/nodes/c_plocal.png")),
-    C_private(IconLoader.getIcon("/nodes/c_private.png")),
-    C_protected(IconLoader.getIcon("/nodes/c_protected.png")),
-    C_public(IconLoader.getIcon("/nodes/c_public.png")),
-    Class(IconLoader.getIcon("/nodes/class.png")),
-    ClassInitializer(IconLoader.getIcon("/nodes/classInitializer.png")),
-    CompiledClassesFolder(IconLoader.getIcon("/nodes/compiledClassesFolder.png")),
-    CopyOfFolder(IconLoader.getIcon("/nodes/copyOfFolder.png")),
-    Cvs_global(IconLoader.getIcon("/nodes/cvs_global.png")),
-    Cvs_roots(IconLoader.getIcon("/nodes/cvs_roots.png")),
+    AbstractClass(IconLoader.getIcon("/nodes/abstractClass.svg")),
+    AbstractException(IconLoader.getIcon("/nodes/abstractException.svg")),
+    AbstractMethod(IconLoader.getIcon("/nodes/abstractMethod.svg")),
+    AnnotationType(IconLoader.getIcon("/nodes/annotationtype.svg")),
+    AnonymousClass(IconLoader.getIcon("/nodes/anonymousClass.svg")),
+    Artifact(IconLoader.getIcon("/nodes/artifact.svg")),
+    C_plocal(IconLoader.getIcon("/nodes/c_plocal.svg")),
+    C_private(IconLoader.getIcon("/nodes/c_private.svg")),
+    C_protected(IconLoader.getIcon("/nodes/c_protected.svg")),
+    C_public(IconLoader.getIcon("/nodes/c_public.svg")),
+    Class(IconLoader.getIcon("/nodes/class.svg")),
+    ClassInitializer(IconLoader.getIcon("/nodes/classInitializer.svg")),
+    CompiledClassesFolder(IconLoader.getIcon("/nodes/compiledClassesFolder.svg")),
+    CopyOfFolder(IconLoader.getIcon("/nodes/copyOfFolder.svg")),
+    Cvs_global(IconLoader.getIcon("/nodes/cvs_global.svg")),
+    Cvs_roots(IconLoader.getIcon("/nodes/cvs_roots.svg")),
     DataColumn(IconLoader.getIcon("/nodes/dataColumn.png")),
     DataSchema(IconLoader.getIcon("/nodes/dataSchema.png")),
     dataSource(IconLoader.getIcon("/nodes/DataSource.png")),
@@ -150,7 +150,7 @@ enum FolderIcon implements IIconGetter {
         int height = icon.getIconHeight();
         int width = icon.getIconWidth();
         if (height > 16 || width > 16) {
-            BufferedImage im = UIUtil.createImage(16, 16, BufferedImage.TYPE_4BYTE_ABGR);
+            BufferedImage im = ImageUtil.createImage(16, 16, BufferedImage.TYPE_4BYTE_ABGR);
 
             if (height == width) {
                 im.getGraphics().drawImage(icon.getImage(), 0, 0, 16, 16, null);

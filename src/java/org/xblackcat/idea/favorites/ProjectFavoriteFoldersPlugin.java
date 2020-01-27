@@ -1,11 +1,9 @@
 package org.xblackcat.idea.favorites;
 
-import com.intellij.openapi.components.ProjectComponent;
+import com.intellij.openapi.components.Service;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
-import com.intellij.openapi.components.StorageScheme;
 import com.intellij.openapi.project.Project;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author xBlackCat
@@ -14,46 +12,20 @@ import org.jetbrains.annotations.NotNull;
 @State(
         name = "ProjectFavoriteFolders",
         storages = {
-                @Storage(
-                        file = "$PROJECT_FILE$"
-                ),
-                @Storage(
-                        id = "dir",
-                        file = "$PROJECT_CONFIG_DIR$/projectfavoriteFolders.xml",
-                        scheme = StorageScheme.DIRECTORY_BASED
-                )
+                @Storage("$PROJECT_FILE$")
         }
 )
-public class ProjectFavoriteFoldersPlugin extends AFavoritesContainer implements ProjectComponent {
+@Service
+public class ProjectFavoriteFoldersPlugin extends AFavoritesContainer {
     private final Project project;
 
     public ProjectFavoriteFoldersPlugin(Project project) {
         this.project = project;
     }
 
-    @NotNull
-    public String getComponentName() {
-        return "ProjectFavoriteFoldersPlugin";
-    }
-
     @Override
     protected AConfigPane getConfigPane() {
         return new ProjectFavoriteFoldersConfigPane(project);
-    }
-
-    @Override
-    protected void updateFavorites(boolean firstRun) {
-        Utils.updateFavorites();
-    }
-
-    @Override
-    public void projectOpened() {
-        Utils.updateFavorites();
-    }
-
-    @Override
-    public void projectClosed() {
-        Utils.updateFavorites();
     }
 
     @Override
