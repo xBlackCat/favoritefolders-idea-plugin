@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'org.xblackcat'
-version '1.3.1.1'
+version '1.3.2'
 
 sourceCompatibility = 1.8
 
@@ -20,10 +20,10 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version '2020.1'
+    version 'LATEST-EAP-SNAPSHOT'
 }
 patchPluginXml {
-    sinceBuild '193.1'
+    sinceBuild '201.2935'
     untilBuild null
     changeNotes """
 <ul>
@@ -44,5 +44,6 @@ patchPluginXml {
 <li><b>v1.3</b> - Code review: do not use deprecated features. Prepare for Idea 2020.x</li>
 <li><b>v1.3.1</b> - Code review: improve integration with Idea 2020.x</li>
 <li><b>v1.3.1.1</b> - Remove upper bound of version restriction</li>
+<li><b>v1.3.2</b> - Fix compatibility warnings for 203.+ IDE versions. Drop support Idea 2019.x versions</li>
         </ul>"""
 }

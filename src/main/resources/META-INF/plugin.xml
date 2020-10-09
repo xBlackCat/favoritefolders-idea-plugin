@@ -4,7 +4,7 @@
     <version>1.3.1</version>
     <vendor email="xblackcat@gmail.com" url="http://code.google.com/p/favoritefolders-idea-plugin/">xBlackCat</vendor>
     <depends>com.intellij.modules.platform</depends>
-    <idea-version since-build="193.1"/>
+    <idea-version since-build="201.2935"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="org.xblackcat.idea.favorites.FavoriteFoldersPlugin"/>

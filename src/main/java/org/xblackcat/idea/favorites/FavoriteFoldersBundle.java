@@ -1,35 +1,19 @@
 package org.xblackcat.idea.favorites;
 
-import com.intellij.BundleBase;
+import com.intellij.DynamicBundle;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.PropertyKey;
 
-import java.lang.ref.Reference;
-import java.lang.ref.SoftReference;
-import java.util.ResourceBundle;
-
-class FavoriteFoldersBundle {
-    private static Reference<ResourceBundle> ourBundle;
-
+class FavoriteFoldersBundle extends DynamicBundle {
     @NonNls
     protected static final String PATH_TO_BUNDLE = "messages.FavoriteFoldersBundle";
+    private static final FavoriteFoldersBundle INSTANCE = new FavoriteFoldersBundle();
 
     private FavoriteFoldersBundle() {
+        super(PATH_TO_BUNDLE);
     }
 
     public static String message(@PropertyKey(resourceBundle = PATH_TO_BUNDLE) String key, Object... params) {
-        return BundleBase.message(getBundle(), key, params);
-    }
-
-    private static ResourceBundle getBundle() {
-        ResourceBundle bundle = null;
-        if (ourBundle != null) {
-            bundle = ourBundle.get();
-        }
-        if (bundle == null) {
-            bundle = ResourceBundle.getBundle(PATH_TO_BUNDLE);
-            ourBundle = new SoftReference<>(bundle);
-        }
-        return bundle;
+        return INSTANCE.getMessage(key, params);
     }
 }
