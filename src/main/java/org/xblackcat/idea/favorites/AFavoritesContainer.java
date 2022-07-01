@@ -1,13 +1,16 @@
 package org.xblackcat.idea.favorites;
 
 import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationAction;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;
 import org.apache.commons.lang.StringUtils;
 import org.jdom.Element;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,31 +87,36 @@ abstract class AFavoritesContainer implements PersistentStateComponent<Element> 
     private void showNotify(boolean showNoFolder) {
         String titleKey = showNoFolder ? "FavoriteFolder.WarningTip.noFolder.title" : "FavoriteFolder.WarningTip.noIcon.title";
         String tipKey = showNoFolder ? "FavoriteFolder.WarningTip.noFolder" : "FavoriteFolder.WarningTip.noIcon";
+        String actionKey = showNoFolder ? "FavoriteFolder.WarningTip.noFolder.action" : "FavoriteFolder.WarningTip.noIcon.action";
 
         // Icon wasn't found - notify user.
         final Notification notification = new Notification(
                 "FavoriteFolders",
                 FavoriteFoldersBundle.message(titleKey),
                 FavoriteFoldersBundle.message(tipKey),
-                NotificationType.WARNING,
-                (n, event) -> {
-                    n.expire();
+                NotificationType.WARNING
+        );
+        notification.addAction(new NotificationAction(FavoriteFoldersBundle.message(actionKey)) {
+            @Override
+            public void actionPerformed(@NotNull AnActionEvent e, @NotNull Notification notification) {
+                notification.expire();
 
-                    AConfigPane configurable = getConfigPane();
-                    ShowSettingsUtil.getInstance().editConfigurable(getProject(), configurable);
+                AConfigPane configurable = getConfigPane();
+                ShowSettingsUtil.getInstance().editConfigurable(getProject(), configurable);
 
-                    // Check again
-                    for (FavoriteFolder ff : favorites) {
-                        if (!ff.isIconValid()) {
-                            showNotify(false);
-                            return;
-                        } else if (!ff.isFileValid()) {
-                            showNotify(true);
-                            return;
-                        }
+                // Check again
+                for (FavoriteFolder ff : favorites) {
+                    if (!ff.isIconValid()) {
+                        showNotify(false);
+                        return;
+                    } else if (!ff.isFileValid()) {
+                        showNotify(true);
+                        return;
                     }
                 }
-        );
+
+            }
+        });
 
         Project targetProject = getProject() == null || getProject().isDefault() ? null : getProject();
         Notifications.Bus.notify(notification, targetProject);

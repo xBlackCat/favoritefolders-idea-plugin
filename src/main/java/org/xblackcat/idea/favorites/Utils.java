@@ -10,12 +10,11 @@ import com.intellij.openapi.keymap.KeymapManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.DialogBuilder;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author xBlackCat
@@ -23,8 +22,8 @@ import java.util.List;
 final class Utils {
     private static final String ACTION_PREFIX = "FavoriteFolder.Favorite_";
     private static final String PROJECT_ACTION_PREFIX = "FavoriteFolder.Project_Favorite_";
-    private static final PluginId PLUGIN_ID = PluginManager.getPluginByClassName(FavoriteFoldersPlugin.class.getName());
-    private static final PluginId PROJECT_PLUGIN_ID = PluginManager.getPluginByClassName(ProjectFavoriteFoldersPlugin.class.getName());
+    private static final PluginId PLUGIN_ID = Objects.requireNonNull(PluginManager.getPluginByClass(FavoriteFoldersPlugin.class)).getPluginId();
+    private static final PluginId PROJECT_PLUGIN_ID = Objects.requireNonNull(PluginManager.getPluginByClass(ProjectFavoriteFoldersPlugin.class)).getPluginId();
 
     private Utils() {
     }

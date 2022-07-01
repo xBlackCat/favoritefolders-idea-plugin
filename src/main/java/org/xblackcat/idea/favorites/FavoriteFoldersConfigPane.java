@@ -1,6 +1,6 @@
 package org.xblackcat.idea.favorites;
 
-import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.application.ApplicationManager;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +15,7 @@ class FavoriteFoldersConfigPane extends AConfigPane {
 
     @Override
     protected AFavoritesContainer getFavoritesContainer() {
-        return ServiceManager.getService(FavoriteFoldersPlugin.class);
+        return ApplicationManager.getApplication().getService(FavoriteFoldersPlugin.class);
     }
 
     @NotNull

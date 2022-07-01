@@ -3,7 +3,7 @@ package org.xblackcat.idea.favorites;
 import com.intellij.ide.ui.UISettings;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.Presentation;
-import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileChooser.FileSystemTree;
 import com.intellij.openapi.fileChooser.actions.FileChooserAction;
@@ -42,14 +42,14 @@ class AddFavoriteFolder extends FileChooserAction {
         switch (chooser.getTargetLevel()) {
             default:
             case Global: {
-                plugin = ServiceManager.getService(FavoriteFoldersPlugin.class);
+                plugin = ApplicationManager.getApplication().getService(FavoriteFoldersPlugin.class);
                 break;
             }
             case Project:
                 Project project = e.getProject();
                 LOG.assertTrue(project != null);
 
-                plugin = ServiceManager.getService(project, ProjectFavoriteFoldersPlugin.class);
+                plugin = project.getService(ProjectFavoriteFoldersPlugin.class);
                 break;
         }
 
