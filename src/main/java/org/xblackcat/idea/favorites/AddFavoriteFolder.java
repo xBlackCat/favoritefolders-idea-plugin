@@ -1,6 +1,7 @@
 package org.xblackcat.idea.favorites;
 
 import com.intellij.ide.ui.UISettings;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.application.ApplicationManager;
@@ -9,6 +10,7 @@ import com.intellij.openapi.fileChooser.FileSystemTree;
 import com.intellij.openapi.fileChooser.actions.FileChooserAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author xBlackCat
@@ -38,19 +40,15 @@ class AddFavoriteFolder extends FileChooserAction {
             return;
         }
 
-        AFavoritesContainer plugin;
+        final AFavoritesContainer plugin;
         switch (chooser.getTargetLevel()) {
-            default:
-            case Global: {
-                plugin = ApplicationManager.getApplication().getService(FavoriteFoldersPlugin.class);
-                break;
-            }
-            case Project:
+            case Project -> {
                 Project project = e.getProject();
                 LOG.assertTrue(project != null);
-
                 plugin = project.getService(ProjectFavoriteFoldersPlugin.class);
-                break;
+            }
+            case Global -> plugin = ApplicationManager.getApplication().getService(FavoriteFoldersPlugin.class);
+            default -> throw new RuntimeException("Unexpected");
         }
 
         plugin.getFavorites().add(folder);
@@ -62,5 +60,10 @@ class AddFavoriteFolder extends FileChooserAction {
     protected void update(FileSystemTree fileSystemTree, AnActionEvent e) {
         final Presentation presentation = e.getPresentation();
         presentation.setEnabled(fileSystemTree.selectionExists());
+    }
+
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.EDT;
     }
 }

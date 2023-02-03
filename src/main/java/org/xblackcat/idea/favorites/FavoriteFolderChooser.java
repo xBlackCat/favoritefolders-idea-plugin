@@ -90,7 +90,7 @@ class FavoriteFolderChooser {
                 new SimpleListCellRenderer<IIconGetter>() {
                     @Override
                     public void customize(@NotNull JList jList, IIconGetter value, int i, boolean b, boolean b1) {
-                        setIcon(value.getIcon());
+                        setIcon(value.icon());
                         setText(value.isCustom() ? "<Custom>" : value.getName());
                     }
                 }

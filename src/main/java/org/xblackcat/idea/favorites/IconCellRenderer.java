@@ -16,7 +16,7 @@ class IconCellRenderer extends ACellRenderer {
     protected void setValue(FavoriteFolder ff) {
         setText(null);
         IIconGetter icon = ff.getIcon();
-        setIcon(icon.getIcon());
+        setIcon(icon.icon());
         setToolTipText(icon.getName());
 
         if (!ff.isIconValid()) {

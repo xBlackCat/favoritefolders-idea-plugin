@@ -3,7 +3,7 @@ package org.xblackcat.idea.favorites;
 import javax.swing.*;
 
 interface IIconGetter {
-    Icon getIcon();
+    Icon icon();
 
     String getName();
 

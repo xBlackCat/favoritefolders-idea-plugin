@@ -121,7 +121,7 @@ enum FolderIcon implements IIconGetter {
     }
 
     @Override
-    public Icon getIcon() {
+    public Icon icon() {
         return icon;
     }
 
@@ -183,20 +183,7 @@ enum FolderIcon implements IIconGetter {
         return Default;
     }
 
-    private static final class CustomIcon implements IIconGetter {
-        private final String url;
-        private final Icon icon;
-
-        private CustomIcon(String url, Icon icon) {
-            this.url = url;
-            this.icon = icon;
-        }
-
-        @Override
-        public Icon getIcon() {
-            return icon;
-        }
-
+    private record CustomIcon(String url, Icon icon) implements IIconGetter {
         @Override
         public String getName() {
             return url;

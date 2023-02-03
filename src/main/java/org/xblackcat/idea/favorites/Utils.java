@@ -37,11 +37,9 @@ final class Utils {
 
         ProjectManager projectManager = ProjectManager.getInstance();
         Project[] openProjects = projectManager.getOpenProjects();
-        if (openProjects.length > 0) {
-            for (Project p : openProjects) {
-                List<FavoriteFolder> favorites = p.getService(ProjectFavoriteFoldersPlugin.class).getFavorites();
-                nextIndex = registerFavorites(PROJECT_ACTION_PREFIX, favorites, nextIndex, PROJECT_PLUGIN_ID);
-            }
+        for (Project p : openProjects) {
+            List<FavoriteFolder> favorites = p.getService(ProjectFavoriteFoldersPlugin.class).getFavorites();
+            nextIndex = registerFavorites(PROJECT_ACTION_PREFIX, favorites, nextIndex, PROJECT_PLUGIN_ID);
         }
     }
 

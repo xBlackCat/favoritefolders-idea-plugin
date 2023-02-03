@@ -75,7 +75,7 @@ abstract class AConfigPane extends BaseConfigurable implements SearchableConfigu
             super(new BorderLayout());
             this.plugin = plugin;
 
-            favoritesPanel = new AddEditRemovePanel<FavoriteFolder>(model, favoriteList, "Favorite folders list") {
+            favoritesPanel = new AddEditRemovePanel<>(model, favoriteList, "Favorite folders list") {
                 @Override
                 protected FavoriteFolder addItem() {
                     return editItem(null);

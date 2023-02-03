@@ -11,6 +11,7 @@
                                  id="favoritefolders" groupId="tools" instance="org.xblackcat.idea.favorites.FavoriteFoldersConfigPane"/>
         <projectConfigurable instance="org.xblackcat.idea.favorites.ProjectFavoriteFoldersConfigPane" parentId="favoritefolders"
                              id="favoritefolders_project"/>
+        <notificationGroup displayType="BALLOON" id="FavoriteFolders"/>
     </extensions>
 
     <applicationListeners>

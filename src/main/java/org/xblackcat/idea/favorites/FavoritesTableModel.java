@@ -9,16 +9,13 @@ import com.intellij.ui.AddEditRemovePanel;
 class FavoritesTableModel extends AddEditRemovePanel.TableModel<FavoriteFolder> {
     @Override
     public String getColumnName(int column) {
-        switch (column) {
-            case 0:
-                return "Icon";
-            case 1:
-                return "Name";
-            case 2:
-                return "Folder";
-        }
+        return switch (column) {
+            case 0 -> "Icon";
+            case 1 -> "Name";
+            case 2 -> "Folder";
+            default -> "";
+        };
 
-        return "";
     }
 
     @Override
