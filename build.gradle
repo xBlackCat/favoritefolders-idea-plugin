@@ -46,7 +46,8 @@ patchPluginXml {
 <li><b>v1.3.1.1</b> - Remove upper bound of version restriction</li>
 <li><b>v1.3.2</b> - Fix compatibility warnings for 203.+ IDE versions. Drop support Idea 2019.x versions</li>
 <li><b>v1.3.3</b> - Set minimum idea version to 2022.1. Fix compatibility warnings</li>
-<li><b>v1.3.4</b> - Set minimum idea version to 2023.1. Fix compatibility warnings. Increase java level up to 17</li>
+<li><b>v1.3.4</b> - Set minimum idea version to 2022.3. Fix compatibility warnings. Increase java level up to 17</li>
+<li><b>v1.3.5</b> - Make it works in 2023 EAP</li>
         </ul>"""
     })
 }
