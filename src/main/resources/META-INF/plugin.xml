@@ -18,13 +18,16 @@
         <listener class="org.xblackcat.idea.favorites.PluginLifeHandler" topic="com.intellij.ide.AppLifecycleListener"/>
     </applicationListeners>
 
-    <actions>
-        <action id="FavoriteFolder.AddFavorite"
-                class="org.xblackcat.idea.favorites.AddFavoriteFolder"
-                text="Add to Favorites"
-                icon="/general/add.svg">
-            <keyboard-shortcut first-keystroke="ctrl shift F" keymap="$default"/>
-            <add-to-group group-id="FileChooserToolbar" anchor="last"/>
-        </action>
+    <actions resource-bundle="messages.FavoriteFoldersBundle">
+        <group id="FavoriteFolders" text="FavoriteFolders">
+            <separator/>
+            <action id="FavoriteFolder.AddFavorite"
+                    class="org.xblackcat.idea.favorites.AddFavoriteFolderAction"
+                    icon="/general/add.svg">
+                <keyboard-shortcut first-keystroke="ctrl shift F" keymap="$default"/>
+            </action>
+
+            <add-to-group group-id="FileChooserToolbar" anchor="after" relative-to-action="FileChooser.GotoProject"/>
+        </group>
     </actions>
 </idea-plugin>

@@ -77,7 +77,7 @@ final class Utils {
         KeymapManager km = KeymapManager.getInstance();
         Keymap keymap = km.getKeymap(KeymapManager.DEFAULT_IDEA_KEYMAP);
 
-        DefaultActionGroup group = (DefaultActionGroup) am.getAction("FileChooserToolbar");
+        DefaultActionGroup group = (DefaultActionGroup) am.getAction("FavoriteFolders");
 
         List<String> actionIds = am.getActionIdList(actionPrefix);
         for (String actionId : actionIds) {
@@ -97,16 +97,16 @@ final class Utils {
     ) {
         ActionManager am = ActionManager.getInstance();
 
-        DefaultActionGroup group = (DefaultActionGroup) am.getAction("FileChooserToolbar");
+        DefaultActionGroup group = (DefaultActionGroup) am.getAction("FavoriteFolders");
 
         int id = startIndex;
-        Constraints constraint = new Constraints(Anchor.BEFORE, "FileChooser.NewFile");
+        Constraints constraint = new Constraints(Anchor.BEFORE, "FavoriteFolder.AddFavorite");
         for (FavoriteFolder fi : favorites) {
             if (!fi.isFileValid()) {
                 continue;
             }
 
-            GoToFavoriteFolder a = new GoToFavoriteFolder(fi);
+            GoToFavoriteFolderAction a = new GoToFavoriteFolderAction(fi);
             am.registerAction(actionPrefix + id, a, pluginId);
             addShortCut(actionPrefix, id);
 
